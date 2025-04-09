@@ -123,7 +123,7 @@ def model_test(runid, engine, dataloader, device, logger, cfg, mode='Test'):
 
     if mode=='Test':
         # 测试结果保留，用于生成图像
-        pred_all = predicts.cpu()
+        pred_all = predicts
         path_save_pred = os.path.join(cfg['save'], cfg['model_name'], cfg['data']['freq'], 'result_pred')
         if not os.path.exists(path_save_pred):
             os.makedirs(path_save_pred, exist_ok=True)
@@ -131,7 +131,7 @@ def model_test(runid, engine, dataloader, device, logger, cfg, mode='Test'):
         name = 'exp{:d}_Test_mae:{:.4f}_mape:{:.4f}_rmse:{:.4f}'. \
             format(cfg['expid'], mtest_mae, mtest_mape, mtest_rmse)
         path = os.path.join(path_save_pred, name)
-        np.save(path, pred_all)
+        np.save(path, pred_all.cpu().numpy())
         logger.info('result of prediction has been saved, path: {}'.format(path))
         logger.info('shape: ' + str(pred_all.shape))
 
@@ -186,7 +186,7 @@ def baseline_test(runid, model, dataloader, device, logger, cfg):
     best_mode_path = cfg['train']['best_mode']
     logger.info("loading {}".format(best_mode_path))
 
-    save_dict = torch.load(best_mode_path)
+    save_dict = torch.load(best_mode_path, map_location=torch.device('mps'))
     engine.model.load_state_dict(save_dict['model_state_dict'], strict=False)
     logger.info('model load success! {}'.format(best_mode_path))
 

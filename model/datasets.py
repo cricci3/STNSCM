@@ -176,9 +176,9 @@ class traffic_demand_prediction_dataset(Dataset):
         timeofday = np.zeros((arr.shape[0], arr.shape[1], timeofday_len))
 
         for i in range(arr.shape[0]):
-            dayofweek[i] = np.eye(dayofweek_len)[arr[:, :, 0][i].astype(np.int)]
+            dayofweek[i] = np.eye(dayofweek_len)[arr[:, :, 0][i].astype(np.int32)]
 
         for i in range(arr.shape[0]):
-            timeofday[i] = np.eye(timeofday_len)[arr[:, :, 1][i].astype(np.int)]
+            timeofday[i] = np.eye(timeofday_len)[arr[:, :, 1][i].astype(np.int32)]
         arr = np.concatenate([dayofweek, timeofday, arr[..., 2:]], axis=-1)
         return arr

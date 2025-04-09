@@ -27,7 +27,7 @@ import numpy as np
 import sys
 import os
 
-from model.STEGRN import STEGRN
+from model.STNSCN import STNSCN
 from model.tester import baseline_test
 from model.trainer import baseline_train
 
@@ -129,7 +129,7 @@ if __name__ == '__main__':
     rmse_list = []
     for i in range(cfg['runs']):
 
-        model = STEGRN(input_dim=cfg['model']['input_dim'],
+        model = STNSCN(input_dim=cfg['model']['input_dim'],
                        time_dim=cfg['model']['time_dim'],
                        hidden_dim=cfg['model']['hidden_dim'],
                        output_dim=cfg['model']['output_dim'],

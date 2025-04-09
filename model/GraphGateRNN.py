@@ -184,7 +184,12 @@ class GraphGateRNN(nn.Module):
 
         x = self.input_process(x, x_time, self.fusion_mode)
 
-        Hidden_State = Hidden_State.view(batch_size, node_num, self.hidden_channels)
+        # For example, if hidden_channels should be 1:
+        # Replace the problematic line
+        # First make sure it's a 2D tensor, then reshape to 3D with proper dimensions
+        Hidden_State = Hidden_State.view(batch_size, node_num, -1)  # Get to [64, 64, 1]
+        Hidden_State = Hidden_State.expand(batch_size, node_num, self.hidden_channels).to("mps")
+        x = x.to("mps")
 
         # 处理输入
         if encoder_hidden is not None:
