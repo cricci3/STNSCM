@@ -46,7 +46,7 @@ except ImportError:
 if __name__ == '__main__':
 
 
-    data_name = 'BJ'
+    data_name = 'NYC'
 
     # 设置配置文件
     config_filename = 'data/ckpt/'+data_name+'/config.yaml'
