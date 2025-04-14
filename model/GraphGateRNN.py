@@ -174,6 +174,7 @@ class GraphGateRNN(nn.Module):
         return x
 
     def forward(self, input, input_time, Hidden_State, encoder_hidden=None):
+        DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'mps')
 
         x = input
         x_time = input_time
@@ -188,8 +189,8 @@ class GraphGateRNN(nn.Module):
         # Replace the problematic line
         # First make sure it's a 2D tensor, then reshape to 3D with proper dimensions
         Hidden_State = Hidden_State.view(batch_size, node_num, -1)  # Get to [64, 64, 1]
-        Hidden_State = Hidden_State.expand(batch_size, node_num, self.hidden_channels).to("mps")
-        x = x.to("mps")
+        Hidden_State = Hidden_State.expand(batch_size, node_num, self.hidden_channels).to(DEVICE)
+        x = x.to(DEVICE)
 
         # 处理输入
         if encoder_hidden is not None:

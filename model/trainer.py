@@ -45,6 +45,8 @@ def baseline_train(runid, model,
                    logger,
                    cfg):
 
+    DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'mps') 
+
     print("start training...", flush=True)
     save_path = os.path.join(cfg['save'], cfg['model_name'], cfg['data']['freq'], 'ckpt')
     scaler = dataloader['scaler']
@@ -86,7 +88,7 @@ def baseline_train(runid, model,
     if cfg['train']['load_initial']:
         best_mode_path = cfg['train']['best_mode']
         logger.info("loading {}".format(best_mode_path))
-        save_dict = torch.load(best_mode_path, map_location=torch.device('mps'))
+        save_dict = torch.load(best_mode_path, map_location=torch.device(DEVICE))
         engine.model.load_state_dict(save_dict['model_state_dict'])
         logger.info('model load success! {}'.format(best_mode_path))
 
@@ -231,7 +233,7 @@ def baseline_train(runid, model,
 
     logger.info('Start the model test phase........')
     logger.info("loading the best model for this training phase {}".format(best_mode_path))
-    save_dict = torch.load(best_mode_path, map_location=torch.device('mps'))
+    save_dict = torch.load(best_mode_path, map_location=torch.device(DEVICE))
     engine.model.load_state_dict(save_dict['model_state_dict'])
 
     valid_loss, valid_mae, valid_mape, valid_rmse, valid_outputs = model_val(runid,
