@@ -148,8 +148,14 @@ class Trainer():
             predict = self.scaler.inverse_transform(output)
 
             # Huber Loss
-            loss = self.loss(predict[:, :, :self.task_level, :],
-                             target[:, :, :self.task_level, :])
+            # loss = self.loss(predict[:, :, :self.task_level, :],
+            #                  target[:, :, :self.task_level, :])
+            # Ensure the tensors are contiguous before loss
+            predict_slice = predict[:, :, :self.task_level, :].contiguous()
+            target_slice = target[:, :, :self.task_level, :].contiguous()
+
+            loss = self.loss(predict_slice, target_slice)
+
 
             mae = masked_mae_torch(predict[:, :, :self.task_level, :],
                                    target[:, :, :self.task_level, :],
