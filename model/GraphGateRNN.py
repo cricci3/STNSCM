@@ -178,67 +178,82 @@ class GraphGateRNN(nn.Module):
 
         x = input
         x_time = input_time
-        if x_time==None:                # 当第二个cell是没有时间维度
+        if x_time == None:  # When second cell has no time dimension
             batch_size, node_num, in_channels = input.shape
-        else:                           # 第一个cell有时间，并且时间维度是各个周期之和
+        else:  # First cell has time, and time dimension is the sum of cycles
             batch_size, node_num, _, in_channels = input.shape
 
         x = self.input_process(x, x_time, self.fusion_mode)
 
-        # For example, if hidden_channels should be 1:
-        # Replace the problematic line
-        # First make sure it's a 2D tensor, then reshape to 3D with proper dimensions
-        Hidden_State = Hidden_State.view(batch_size, node_num, -1)  # Get to [64, 64, 1]
-        Hidden_State = Hidden_State.expand(batch_size, node_num, self.hidden_channels).to(DEVICE)
+        # Debug the Hidden_State shape
+        print(f"Hidden_State shape: {Hidden_State.shape}, size: {Hidden_State.numel()}")
+        print(f"Expected shape product: {batch_size * node_num * self.hidden_channels}")
+        
+        # Check if Hidden_State has the proper dimensions
+        if Hidden_State.numel() != batch_size * node_num * self.hidden_channels:
+            # If dimensions don't match, initialize with correct shape
+            print(f"WARNING: Hidden_State size mismatch. Reinitializing with correct shape.")
+            Hidden_State = torch.zeros(batch_size, node_num, self.hidden_channels, device=DEVICE)
+        else:
+            # Reshape if needed
+            if Hidden_State.dim() == 2:  # If it's [batch_size*node_num, hidden_channels]
+                Hidden_State = Hidden_State.view(batch_size, node_num, -1)
+            elif Hidden_State.dim() == 3:  # If it's already [batch_size, node_num, channels]
+                pass  # No need to reshape
+            else:
+                # Handle other cases or raise meaningful error
+                raise ValueError(f"Unexpected Hidden_State shape: {Hidden_State.shape}. Expected dimensions: 2 or 3.")
+
+        # Make sure Hidden_State is on the right device
+        Hidden_State = Hidden_State.to(DEVICE)
         x = x.to(DEVICE)
 
-        # 处理输入
+        # Process the input
         if encoder_hidden is not None:
             Hidden_State = Hidden_State + encoder_hidden
 
         combined = torch.cat((x, Hidden_State), -1)
 
-        # 图生成门  生成图不同batch 不同，因此维度[batch, node_num, node_num]
+        # Graph generation gate - different graph for different batches, dimension [batch, node_num, node_num]
         dyn_norm_adj, dyn_adj = self.dynGraph(x, Hidden_State)
         dyn_norm_adjT = dyn_norm_adj.transpose(1, 2)
 
-        # 多图集合
+        # Multiple graph collection
         norm_adjs = [adj for adj in self.static_norm_adjs]
         norm_adjTs = [adj.T for adj in self.static_norm_adjs]
 
-
-        # 更新门 使用扩散卷积
+        # Update gate using diffusion convolution
         update_gate = torch.sigmoid(self.GCN_update1(combined, norm_adjs, dyn_norm_adj) +
-                                self.GCN_update2(combined, norm_adjTs, dyn_norm_adjT))
+                                    self.GCN_update2(combined, norm_adjTs, dyn_norm_adjT))
 
-        # 重置们
+        # Reset gate
         reset_gate = torch.sigmoid(self.GCN_reset1(combined, norm_adjs, dyn_norm_adj) +
-                               self.GCN_reset2(combined, norm_adjTs, dyn_norm_adjT))
+                                self.GCN_reset2(combined, norm_adjTs, dyn_norm_adjT))
 
-        # 生成候选集
+        # Generate candidate set
         temp = torch.cat((x, torch.mul(reset_gate, Hidden_State)), -1)
         Cell_State = torch.tanh(self.GCN_cell1(temp, norm_adjs, dyn_norm_adj) +
-                            self.GCN_cell2(temp, norm_adjTs, dyn_norm_adjT))         # 当前临时隐藏层状态
+                                self.GCN_cell2(temp, norm_adjTs, dyn_norm_adjT))  # Current temporary hidden layer state
 
-        # 更新隐藏表示
+        # Update hidden representation
         next_Hidden_State = torch.mul(update_gate, Hidden_State) + torch.mul(1.0 - update_gate, Cell_State)
 
-        # 通道维度正则化
+        # Channel dimension normalization
         next_hidden = self.layerNorm(next_Hidden_State)
 
         output = next_hidden
         if self.dropout_type == 'zoneout':
             next_hidden = self.zoneout(prev_h=Hidden_State,
-                                       next_h=next_hidden,
-                                       rate=self.dropout_prob,
-                                       training=self.training)
+                                    next_h=next_hidden,
+                                    rate=self.dropout_prob,
+                                    training=self.training)
 
         return output, next_hidden
 
 
-
     def zoneout(self, prev_h, next_h, rate, training=True):
         """
+        Applies zoneout regularization
         """
         if training:
             d = torch.zeros_like(next_h).bernoulli_(rate)
