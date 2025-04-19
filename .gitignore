@@ -1,4 +1,9 @@
 *.DS_STORE
+data/ckpt/BJ/STNSCN/*
+data/ckpt/NYC/STNSCN/*
+data/ckpt/NYC/dummy_gru/*
+data/ckpt/NYC/DUMMY_GRU/*
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
