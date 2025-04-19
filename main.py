@@ -28,6 +28,7 @@ import sys
 import os
 
 from model.STNSCN import STNSCN
+from GRU import DummyGRU
 from model.tester import baseline_test
 from model.trainer import baseline_train
 
@@ -48,52 +49,52 @@ if __name__ == '__main__':
 
     data_name = 'NYC'
 
-    # 设置配置文件
-    config_filename = 'data/ckpt/'+data_name+'/config.yaml'
+    # Setting up the configuration file
+    config_filename = 'data/ckpt/'+data_name+'/config2.yaml'
 
     with open(config_filename, 'r') as ymlfile:
         cfg = yaml.load(ymlfile, Loader=Loader)
 
-    # 设置测试模型
+    # Setting up the test model
 
-    # 设置路径信息
-    # 数据集路径
+    # Setting Route Information
+    # Dataset Path
     base_path = cfg['base_path']
 
     dataset_name = cfg['dataset_name']
 
     dataset_path = os.path.join(base_path, dataset_name)
 
-    # Log日志路径
+    # Log Path
     log_path = os.path.join('data/ckpt/'+data_name, cfg['model_name'], cfg['data']['freq'], 'log')
     if not os.path.exists(log_path):
         os.makedirs(log_path, exist_ok=True)
 
-    # 结果保存路径
+    # Result Save Path
     save_path = os.path.join('data/ckpt/'+data_name, cfg['model_name'], cfg['data']['freq'], 'ckpt')
     if not os.path.exists(save_path):
         os.makedirs(save_path, exist_ok=True)
 
-    # 设置Log信息
-    # 设置日志文件
+    # Log
+    # Setting up log files
     log_dir = log_path
     log_level = 'INFO'
     log_name = 'info_' + datetime.now().strftime('%m-%d_%H:%M') + '.log'
     logger = get_logger(log_dir, __name__, log_name, level=log_level)
 
-    # 在log目录下保存配置文件
-    with open(os.path.join(log_dir, data_name+'config.yaml'), 'w+') as _f:
+    # Save the configuration file in the log directory
+    with open(os.path.join(log_dir, data_name+'config2.yaml'), 'w+') as _f:
         yaml.safe_dump(cfg, _f)
 
     logger.info(cfg)
     logger.info(dataset_path)
     logger.info(log_path)
 
-    # 多线程训练法
+    # multithreaded training method
     torch.set_num_threads(3)
     device = torch.device(cfg['device'])
 
-    # 设置数据集
+    # Setting up the dataset
     dataloader = load_dataset(dataset_path,
                               cfg['data']['train_batch_size'],
                               cfg['data']['val_batch_size'],
@@ -101,7 +102,7 @@ if __name__ == '__main__':
                               logger=logger
                               )
 
-    # 建立图信息
+    # Building diagram information
     geo_graph = np.load(os.path.join(base_path, 'geo_affinity.npy')).astype(np.float32)
     od_graph = np.load(os.path.join(base_path, 'OD_affinity.npy')).astype(np.float32)
 
@@ -109,7 +110,7 @@ if __name__ == '__main__':
 
     static_norm_adjs = [torch.tensor(asym_adj(adj)).to(device) for adj in adjs]
 
-    # 设置模型
+    # Setting up the model
     model_name = cfg['model_name']
 
     input_dim = cfg['model']['input_dim']
@@ -120,7 +121,7 @@ if __name__ == '__main__':
     num_for_target = cfg['data']['num_for_target']
     num_for_predict = cfg['data']['num_for_predict']
 
-    # 多线程训练
+    # Multi-threaded training
     val_mae_list = []
     val_mape_list = []
     val_rmse_list = []
@@ -129,27 +130,10 @@ if __name__ == '__main__':
     rmse_list = []
     for i in range(cfg['runs']):
 
-        model = STNSCN(input_dim=cfg['model']['input_dim'],
-                       time_dim=cfg['model']['time_dim'],
+        model = DummyGRU(input_dim=cfg['model']['input_dim'],
                        hidden_dim=cfg['model']['hidden_dim'],
                        output_dim=cfg['model']['output_dim'],
-                       gcn_depth=cfg['model']['gcn_depth'],
-                       alpha=cfg['model']['alpha'],
-                       use_transform=cfg['model']['use_transform'],
-                       fusion_mode=cfg['model']['fusion_mode'],
-                       num_of_head=cfg['model']['num_of_head'],
-                       dropout_prob=cfg['model']['dropout_prob'],
-                       dropout_type=cfg['model']['dropout_type'],
-                       device=device,
-                       num_of_weeks=cfg['data']['num_of_weeks'],
-                       num_of_days=cfg['data']['num_of_days'],
-                       num_of_hours=cfg['data']['num_of_hours'],
-                       num_for_predict=cfg['data']['num_for_predict'],
-                       num_for_target=cfg['data']['num_for_target'],
-                       static_norm_adjs=static_norm_adjs,
-                       norm=cfg['model']['dyn_norm'],
-                       use_curriculum_learning=cfg['train']['use_curriculum_learning'],
-                       cl_decay_steps=cfg['train']['cl_decay_steps']
+                       output_seq_len=num_for_predict
                        )
 
         print(cfg)

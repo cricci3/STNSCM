@@ -1,0 +1,54 @@
+expid: 1
+runs: 1
+log_level: INFO
+base_path: data/train_data/BJ
+dataset_name: all_data_r1_d1_w1_30min.npz
+
+model_name: dummy_gru  # <- cambia in dummy_mlp o dummy_persistence se vuoi testare altri modelli
+device: mps
+save: data/ckpt/BJ
+
+data:
+    freq: 30min
+    name: bj_bike
+    cluster_num: 54
+    num_for_predict: 6      # Q
+    num_for_target: 2       # P
+    num_of_days: 1
+    num_of_hours: 1
+    num_of_weeks: 1
+    num_shift: 2
+    points_per_hour: 2
+    test_batch_size: 64
+    train_batch_size: 64
+    val_batch_size: 64
+
+model:
+    input_dim: 2            # inflow, outflow
+    hidden_dim: 64
+    output_dim: 2
+    loss_type: mse          # per modelli dummy è meglio 'mse'
+    time_dim: 0
+
+
+train:
+    base_lr: 0.001
+    best_mode: ""           # <-- importante! non caricare pesi salvati da STNSCN
+    test_only: false        # <-- vogliamo fare anche training
+
+    cl_decay_steps: 0
+    epoch_start: 0
+    epochs: 30              # meno epoche, più rapido
+    global_step: 0
+    load_initial: false
+    lr_decay_ratio: 0.5
+    max_grad_norm: 5
+    milestones:
+        - 10
+        - 20
+    min_learning_rate: 1.0e-05
+    new_training: true
+    print_every: 1
+    tolerance: 10
+    use_curriculum_learning: false
+    weight_decay: 0.0001

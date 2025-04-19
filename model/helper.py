@@ -25,7 +25,7 @@ import torch.optim as optim
 import torch
 import torch.nn as nn
 import math
-
+from tools.metrics import metric
 from torch.optim.lr_scheduler import MultiStepLR
 
 from tools.metrics import masked_mae_torch, masked_mape_torch, masked_rmse_torch
@@ -117,7 +117,7 @@ class Trainer():
 
     def train(self, input, input_time, target, target_time, target_cl):
 
-        # 迭代次数
+        # Number of iterations
         self.iter += 1
         self.global_step += 1
 
@@ -131,7 +131,7 @@ class Trainer():
                 self.iter = self.global_step
 
 
-        # 一步前向传播
+        # step-forward propagation
         self.model.train()
         self.optimizer.zero_grad()
 
@@ -212,3 +212,35 @@ class Trainer():
         rmse = masked_rmse_torch(predict, target, null_val=np.inf).item()
         return loss.item(), mae, mape, rmse, predict
 
+
+
+class SimpleTrainer():
+    def __init__(self, model, lr=1e-3, weight_decay=0, loss_type='mse', scaler=None, device='cpu'):
+        self.model = model.to(device)
+        self.device = device
+        self.optimizer = optim.Adam(model.parameters(), lr=lr, weight_decay=weight_decay)
+        self.criterion = nn.MSELoss() if loss_type == 'mse' else nn.L1Loss()
+        self.scaler = scaler
+
+    def train(self, input, target, **kwargs):
+        self.model.train()
+        self.optimizer.zero_grad()
+        output = self.model(input)
+
+        # Allinea output e target
+        output = output[:, :, :target.shape[2], :]
+
+        loss = self.criterion(output, target)
+        loss.backward()
+        self.optimizer.step()
+        mae, mape, rmse = metric(output.detach().cpu(), target.detach().cpu())
+        return loss.item(), mae, mape, rmse
+
+    def eval(self, input, target, **kwargs):
+        self.model.eval()
+        with torch.no_grad():
+            output = self.model(input)
+            output = output[:, :, :target.shape[2], :]  # Match target shape
+            loss = self.criterion(output, target)
+            mae, mape, rmse = metric(output.cpu(), target.cpu())
+        return loss.item(), mae, mape, rmse, output
