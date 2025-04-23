@@ -29,6 +29,7 @@ import os
 
 from model.STNSCN import STNSCN
 from GRU import DummyGRU
+from AGCRN_model.AGCRN import AGCRN
 from model.tester import baseline_test
 from model.trainer import baseline_train
 
@@ -50,7 +51,7 @@ if __name__ == '__main__':
     data_name = 'NYC'
 
     # Setting up the configuration file
-    config_filename = 'data/ckpt/'+data_name+'/config2.yaml'
+    config_filename = 'data/ckpt/'+data_name+'/configAGCRN.yaml'
 
     with open(config_filename, 'r') as ymlfile:
         cfg = yaml.load(ymlfile, Loader=Loader)
@@ -130,11 +131,18 @@ if __name__ == '__main__':
     rmse_list = []
     for i in range(cfg['runs']):
 
-        model = DummyGRU(input_dim=cfg['model']['input_dim'],
-                       hidden_dim=cfg['model']['hidden_dim'],
-                       output_dim=cfg['model']['output_dim'],
-                       output_seq_len=num_for_predict
-                       )
+        # model = DummyGRU(input_dim=cfg['model']['input_dim'],
+        #                hidden_dim=cfg['model']['hidden_dim'],
+        #                output_dim=cfg['model']['output_dim'],
+        #                output_seq_len=num_for_predict
+        #                )
+        
+        model = AGCRN(
+            input_dim=cfg['model']['input_dim'],  
+            hidden_dim=cfg['model']['hidden_dim'],
+            output_dim=cfg['model']['output_dim'],
+            output_seq_len=num_for_predict
+        )
 
         print(cfg)
 

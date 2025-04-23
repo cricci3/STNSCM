@@ -17,9 +17,8 @@ def baseline_train(runid, model, model_name, dataloader, static_norm_adjs, devic
     scaler = dataloader['scaler']
 
     # Selezione dinamica del Trainer
-    if 'dummy' in cfg['model_name'].lower():
+    if 'dummy' in cfg['model_name'].lower() or 'agcrn' in cfg['model_name'].lower():
         from model.helper import SimpleTrainer as Trainer
-
 
         engine = Trainer(
             model=model,
@@ -79,11 +78,22 @@ def baseline_train(runid, model, model_name, dataloader, static_norm_adjs, devic
             target = target.to(device)
 
             metrics = engine.train(input=x, target=target)
+
             train_loss.append(metrics[0])
             train_mae.append(metrics[1])
             train_mape.append(metrics[2])
             train_rmse.append(metrics[3])
             global_step += 1
+        
+        output = engine.model(x)
+        print("Output stats - min:", output.min().item(), 
+                "max:", output.max().item(), 
+                "mean:", output.mean().item())
+        
+        print("Target stats - min:", target.min().item(), 
+            "max:", target.max().item(), 
+            "mean:", target.mean().item(),
+            "std:", target.std().item())
 
         t2 = time.time()
         train_time.append(t2 - t1)
@@ -112,13 +122,25 @@ def baseline_train(runid, model, model_name, dataloader, static_norm_adjs, devic
             logger.info(f"Better model saved: {best_path}")
         else:
             stable_count += 1
-            if stable_count > tolerance:
+            logger.info(f"No improvement ({stable_count}/{tolerance})")
+            
+            # Early stopping check
+            if stable_count >= tolerance:
                 logger.info("Early stopping triggered.")
+                if best_model is None:  # Handle case where no model was saved
+                    logger.warning("No best model available! Using final model.")
+                    best_model = copy.deepcopy(engine.model.state_dict())
                 break
 
     # LOAD BEST MODEL
-    engine.model.load_state_dict(best_model)
+    if best_model is not None:
+        engine.model.load_state_dict(best_model)
+        logger.info("Loaded best model for final evaluation.")
+    else:
+        logger.warning("No best model available! Using final trained model.")
+
     logger.info("Training completed. Evaluating on test set...")
+
 
     valid_loss, valid_mae, valid_mape, valid_rmse, _ = model_val(
         runid, engine, dataloader, device, logger, epoch
