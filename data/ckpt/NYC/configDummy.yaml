@@ -4,7 +4,7 @@ log_level: INFO
 base_path: data/train_data/NYC
 dataset_name: all_data_r1_d1_w1_30min.npz
 
-model_name: dummy_gru  # <- cambia in dummy_mlp o dummy_persistence se vuoi testare altri modelli
+model_name: dummy_gru
 device: mps
 save: data/ckpt/NYC
 
