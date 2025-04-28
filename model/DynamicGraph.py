@@ -13,7 +13,7 @@ Descriptions :
 
 ==================================================================
 TODO List:
-   Date      	           Comments                        Finish
+   Date                     Comments                        Finish
    
    
    
@@ -22,7 +22,6 @@ TODO List:
 import torch.nn.functional as F
 import torch
 import torch.nn as nn
-
 import math
 
 
@@ -33,25 +32,23 @@ class DynamicGraphGenerate(nn.Module):
         self.in_channels = in_channels
         self.hidden_channels = hidden_channels
 
-        self.start_FC = nn.Linear(in_channels+hidden_channels, hidden_channels)
+        self.start_FC = nn.Linear(in_channels + hidden_channels, hidden_channels)
 
         self.avg_pool = nn.AdaptiveAvgPool1d(1)
         self.norm = norm
         self.fc = nn.Sequential(
-                                nn.Linear(node_num, hidden_channels // reduction, bias=False),
-                                nn.ReLU(inplace=True),
-                                nn.Linear(hidden_channels // reduction, node_num, bias=False),
-                                nn.Sigmoid()
-                            )
+            nn.Linear(node_num, hidden_channels // reduction, bias=False),
+            nn.ReLU(inplace=True),
+            nn.Linear(hidden_channels // reduction, node_num, bias=False),
+            nn.Sigmoid()
+        )
         self.dropout = nn.Dropout(dropout_prob)
 
-        # 用于控制激活函数饱和率
+        # Used to control the activation function's saturation rate
         self.alpha = alpha
 
-
     def forward(self, input, hidden):
-
-        # 输入维度均为(batch, node_num, hidden_dim)
+        # Both input dimensions are (batch_size, node_num, hidden_dim)
         x = input
         batch_size, node_num, hidden_dim = x.shape
 
@@ -59,27 +56,25 @@ class DynamicGraphGenerate(nn.Module):
 
         node_feature = self.start_FC(node_feature)
 
-        # 残差连接
-        # (batch, node_num, hidden_dim)
+        # Residual connection
+        # (batch_size, node_num, hidden_dim)
         residual = node_feature
 
-        # 对维度全局平均池化，留下顶点数
-        # (batch, node_num, hidden_dim) -> (batch, node_num, 1) -> (batch, 1, node_num)
+        # Apply global average pooling along feature dimension, keeping node dimension
+        # (batch_size, node_num, hidden_dim) -> (batch_size, node_num, 1) -> (batch_size, 1, node_num)
         residual = self.avg_pool(residual).permute((0, 2, 1))
-        # (batch, 1, node_num) -> (batch, node_num, 1)
+        # (batch_size, 1, node_num) -> (batch_size, node_num, 1)
         residual = self.fc(residual).permute((0, 2, 1))
 
         node_feature = torch.mul(residual.expand_as(node_feature), node_feature)
 
-        # 内积求相似度
+        # Inner product to calculate node similarity
         similarity = torch.matmul(node_feature, node_feature.transpose(2, 1)) / math.sqrt(hidden_dim)
-
-
 
         if self.norm == 'D-1':
             adj = F.relu(torch.tanh(self.alpha * similarity))
-            norm_adj = adj / torch.unsqueeze(adj.sum(dim=-1), dim=-1)           # 归一化
-        elif self.norm=='softmax':
+            norm_adj = adj / torch.unsqueeze(adj.sum(dim=-1), dim=-1)  # Normalize adjacency matrix
+        elif self.norm == 'softmax':
             adj = F.softmax(F.relu(similarity), dim=2)
             norm_adj = adj
 

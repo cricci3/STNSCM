@@ -9,11 +9,11 @@ Created Date : 2021/8/28 13:52
 Author       : Yu Zhao 
 Email        : yzhao@buaa.edu.cn
 ==================================================================
-Descriptions :
-
+Description  : Decoder module for the Spatial-Temporal Neural Network
+               with Structural Context Network (STNSCN)
 ==================================================================
 TODO List:
-   Date      	           Comments                        Finish
+   Date                       Comments                        Finish
    
    
    
@@ -74,14 +74,15 @@ class Decoder(nn.Module):
 
     def forward(self, decoder_input, target_time, target_cl, Hidden_State, task_level=2, global_step=None):
         '''
+        Forward pass of the decoder model
 
         :param decoder_input: [batch_size, node_num, time_len=1, in_channels]
         :param target_time:   [batch_size, node_num, num_for_target, time_channels]
         :param target_cl:     [batch_size, node_num, num_for_target, in_channels]
-        :param Hidden_State:  [batch_size, RNN_layer, node_num, hidden_channels] //
+        :param Hidden_State:  [batch_size, RNN_layer, node_num, hidden_channels] or
                               [batch_size, RNN_layer, node_num, num_pred, hidden_channels]
-        :param task_level:    <=num_for_target
-        :param global_step:   用于调整解码器的输入是否为label
+        :param task_level:    <= num_for_target
+        :param global_step:   Used to adjust whether the decoder's input is the ground truth label
         :return: [batch_size, node_num, num_for_target, out_channels]
         '''
         batch_size, node_num, time_len, dim = decoder_input.shape
@@ -89,13 +90,14 @@ class Decoder(nn.Module):
 
         outputs_final = []
 
-        # 计划性学习，逐步增加输入序列长度，并且按照一定几率使用label作为解码器输入，否则使用前一个时间步解码器输出作为下一个时间步的输入
+        # Curriculum learning: gradually increase input sequence length and use label as decoder input with certain probability
+        # Otherwise, use the previous time step's decoder output as the input for the next time step
         for i in range(task_level):
-            # 初始时间输入
+            # Initial time input
             cur_time = target_time[:, :, i:i + 1, :]
 
             for j, rnn_cell in enumerate(self.RNNCell):
-                # 注意 解码器的输入维度是[batch, node_num, 1, output_channels]
+                # Note: decoder input dimension is [batch, node_num, 1, output_channels]
                 cur_h = Hidden_State[j]
                 cur_out, cur_h = rnn_cell(decoder_input, cur_time, cur_h)
 
@@ -104,16 +106,16 @@ class Decoder(nn.Module):
                 # decoder_input = cur_out
                 cur_time = None
 
-            # 解码器输出 经过FC为最终结果
+            # Decoder output after FC becomes the final result
             decoder_output = self.fc_final(cur_out)
 
-            # 解码器中，前一个时间步的输出作为下一个时间步的输入
+            # In decoder, the output of the previous time step becomes the input for the next time step
             decoder_input = decoder_output.view(batch_size, node_num, 1, self.output_channels)
 
-            # 收集每个解码器输出结果
+            # Collect each decoder output result
             outputs_final.append(decoder_output)
 
-            # 计划性学习，按照一定概率将真实流量作为解码器的输入
+            # Curriculum learning: with certain probability, use the ground truth as the decoder input
             if self.training and self.use_curriculum_learning:
                 c = np.random.uniform(0, 1)
                 prob = self._compute_sampling_threshold(global_step)
