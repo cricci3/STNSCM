@@ -9,11 +9,12 @@ Created Date : 2021/8/27 16:07
 Author       : Yu Zhao 
 Email        : yzhao@buaa.edu.cn
 ==================================================================
-Descriptions :
-
+Description  : Graph Convolutional Network implementation for the
+               Spatial-Temporal Neural Network with Structural
+               Context Network (STNSCN)
 ==================================================================
 TODO List:
-   Date      	           Comments                        Finish
+   Date                       Comments                        Finish
    
    
    
@@ -31,7 +32,7 @@ class dyn_gconv(nn.Module):
         super(dyn_gconv, self).__init__()
 
     def forward(self, A, x):
-        # RNN中的图卷积代替线性变换
+        # Graph convolution to replace linear transformation in RNN
         x = torch.einsum('bhw,bwc->bhc', (A, x))
         return x.contiguous()
 
@@ -56,7 +57,7 @@ class gconv(nn.Module):
 
 
 class linear(nn.Module):
-    '''使用1Dconv代替线性变换'''
+    '''Using 1D convolution to replace linear transformation'''
 
     def __init__(self, c_in, c_out, bias=True):
         super(linear, self).__init__()
@@ -74,8 +75,8 @@ class GCN(nn.Module):
             self.static_gconv = static_gconv()
             self.mlp = linear((gdep + 1) * c_in, c_out)
 
-            # 根据图的数量建立权重参数 graph_num+1 其中1 表示对原始输入量也保留一个权重参数
-            # 1表示输入也需要一个平衡参数， 1表示动态图
+            # Create weight parameters based on the number of graphs
+            # graph_num+1+1: +1 for original input weight, +1 for dynamic graph
             self.weight = nn.Parameter(torch.FloatTensor(graph_num+1+1), requires_grad=True)
             self.weight.data.fill_(1.0)
 
@@ -83,7 +84,7 @@ class GCN(nn.Module):
             self.gconv = gconv()
             self.mlp = linear((gdep + 1) * c_in, c_out)
 
-            # 1表示输入也需要一个平衡参数，
+            # +1 for the weight parameter needed for input
             self.weight = nn.Parameter(torch.FloatTensor(graph_num+1), requires_grad=True)
             self.weight.data.fill_(1.0)
 
@@ -97,8 +98,8 @@ class GCN(nn.Module):
         h = x
         out = [h]
 
-        weight = F.softmax(self.weight, dim=0)     # 概率归一化
-        # weight = self.weight    # 概率归一化
+        weight = F.softmax(self.weight, dim=0)     # Normalize weights to probabilities
+        # weight = self.weight    # Without probability normalization
 
         if self.type == 'RNN':
             for _ in range(self.gdep):
@@ -112,7 +113,7 @@ class GCN(nn.Module):
                 out.append(h)
 
         elif self.type == 'common':
-            for _ in range(self.gdep):  # 扩散阶
+            for _ in range(self.gdep):  # Diffusion steps
                 h = self.weight[0] * x
                 for i in range(1, len(norm_adj)):
                     h += self.weight[i] * self.gconv(norm_adj[i], h)
@@ -120,8 +121,7 @@ class GCN(nn.Module):
 
         ho = torch.cat(out, dim=-1)
 
-        ho = self.mlp(ho)  # 全连接处理结果，使用sigmoid的激活函数
+        ho = self.mlp(ho)  # Process results with fully connected layer using sigmoid activation function
 
 
         return ho
-
