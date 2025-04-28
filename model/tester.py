@@ -98,11 +98,28 @@ def baseline_test(runid, model, dataloader, device, logger, cfg):
             new_training=cfg['train']['new_training'],
         )
 
-    # Load best model if specified
-    if cfg['train'].get('best_mode', None):
-        best_path = cfg['train']['best_mode']
-        logger.info(f"Loading checkpoint from {best_path}")
-        checkpoint = torch.load(best_path, map_location=device)
-        engine.model.load_state_dict(checkpoint['model_state_dict'])
+    best_mode_path = cfg['train']['best_mode']
+    logger.info("loading {}".format(best_mode_path))
 
-    return model_test(runid, engine, dataloader, device, logger, cfg)
+    save_dict = torch.load(best_mode_path, map_location=torch.device('mps'), weights_only=False)
+    engine.model.load_state_dict(save_dict['model_state_dict'], strict=False)
+    logger.info('model load success! {}'.format(best_mode_path))
+
+    # 计算参数数量
+    total_param = 0
+    logger.info('Net\'s state_dict:')
+    for param_tensor in engine.model.state_dict():
+        logger.info(param_tensor + '\t' + str(engine.model.state_dict()[param_tensor].size()))
+        total_param += np.prod(engine.model.state_dict()[param_tensor].size())
+    logger.info('Net\'s total params:{:d}'.format(int(total_param)))
+
+    logger.info('Optimizer\'s state_dict:')
+    for var_name in engine.optimizer.state_dict():
+        logger.info(var_name + '\t' + str(engine.optimizer.state_dict()[var_name]))
+
+    nParams = sum([p.nelement() for p in model.parameters()])
+    logger.info('Number of model parameters is {:d}'.format(int(nParams)))
+
+    mtest_loss, mtest_mae, mtest_mape, mtest_rmse, predicts = model_test(runid, engine, dataloader, device, logger,
+                                                                         cfg, mode='Test')
+    return mtest_mae, mtest_mape, mtest_rmse, mtest_mae, mtest_mape, mtest_rmse
