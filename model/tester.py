@@ -128,7 +128,7 @@ def model_test(runid, engine, dataloader, device, logger, cfg, mode='Test'):
         if not os.path.exists(path_save_pred):
             os.makedirs(path_save_pred, exist_ok=True)
 
-        name = 'exp{:d}_Test_mae:{:.4f}_mape:{:.4f}_rmse:{:.4f}'. \
+        name = 'exp{:d}_Test_mae-{:.4f}_mape-{:.4f}_rmse-{:.4f}'. \
             format(cfg['expid'], mtest_mae, mtest_mape, mtest_rmse)
         path = os.path.join(path_save_pred, name)
         np.save(path, pred_all.cpu().numpy())

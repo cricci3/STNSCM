@@ -130,7 +130,7 @@ def baseline_train(runid, model, model_name, dataloader, static_norm_adjs, devic
             best_val_loss = mvalid_loss
             stable_count = 0
             best_model = copy.deepcopy(engine.model.state_dict())
-            ckpt_name = f"exp{model_name}_epoch{epoch}_ValLoss:{mvalid_loss:.4f}.pth"
+            ckpt_name = f"exp{model_name}_epoch{epoch}_ValLoss-{mvalid_loss:.4f}.pth"
             best_path = os.path.join(save_path, ckpt_name)
             torch.save({'model_state_dict': best_model}, best_path)
             logger.info(f"Better model saved: {best_path}")
