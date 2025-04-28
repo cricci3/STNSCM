@@ -9,11 +9,11 @@ Created Date : 2021/8/28 13:52
 Author       : Yu Zhao 
 Email        : yzhao@buaa.edu.cn
 ==================================================================
-Descriptions :
-
+Description  : Encoder module for the Spatial-Temporal Neural Network
+               with Structural Context Network (STNSCN)
 ==================================================================
 TODO List:
-   Date      	           Comments                        Finish
+   Date                       Comments                        Finish
    
    
    
@@ -42,7 +42,6 @@ class Encoder(nn.Module):
                  num_of_weeks, num_of_days, num_of_hours, num_for_predict, dropout_prob, dropout_type,
                  fusion_mode,
                  node_num,
-                 ablation_config,
                  static_norm_adjs,
                  norm, device):
         super(Encoder, self).__init__()
@@ -53,7 +52,7 @@ class Encoder(nn.Module):
         self.h_length = num_of_hours * num_for_predict
 
         self.seq_length = num_for_predict
-        self.ablation_config=self.ablation_config
+
         self.static_norm_adjs = static_norm_adjs
 
         self.in_channels = in_channels
@@ -81,13 +80,14 @@ class Encoder(nn.Module):
 
     def forward(self, input, x_time, seq_length):
         """
+        Forward pass of the encoder model
 
         :param input: [batch, node, num_pred*3, input_dim]
         :param x_time: [batch, node, num_pred*3, time_dim]
         :param seq_length: num_pred
         :return: [batch, node, num_pred, hidden_dim]
         """
-        # 注意周期性分开处理，因此编码器中时间步长度应该为 num_for_predict的长度
+        # Note: Periodicity is processed separately, so the encoder time step length should be num_for_predict
         x = input
         batch_size, node_num, time_len, dim = x.shape
         Hidden_State = [self.initHidden(batch_size, node_num, self.hidden_channels) for _ in range(self.RNN_layer)]
@@ -104,7 +104,7 @@ class Encoder(nn.Module):
         outputs = []
         hiddens = []
 
-        for i in range(seq_length):  # GRU   编码器过程
+        for i in range(seq_length):  # GRU encoder process
             input_cur = torch.cat([week_feature[:, :, i:i + 1, :],
                                    day_feature[:, :, i:i + 1, :],
                                    hour_feature[:, :, i:i + 1, :]], dim=2)
@@ -114,12 +114,10 @@ class Encoder(nn.Module):
                                     hour_time[:, :, i:i + 1, :]], dim=2)
 
             for j, rnn_cell in enumerate(self.RNNCell):
-                # 编码器输入特征维度为[batch, node_num, 3, in_channels]
+                # Encoder input feature dimension is [batch, node_num, 3, in_channels]
                 cur_h = Hidden_State[j]
-                if self.ablation_config and not self.ablation_config.get("use_input_gate", True):
-                    input_time = None
                 cur_out, cur_h = rnn_cell(input_cur, input_time, cur_h)
-         
+
                 Hidden_State[j] = cur_h
                 input_cur = F.relu(cur_out, inplace=True)
                 input_time = None
@@ -135,16 +133,17 @@ class Encoder(nn.Module):
         outputs = torch.cat(outputs, dim=2)
         hiddens = torch.cat(hiddens, dim=3)
 
-        # 编码器输出被抛弃，最后一个隐藏层作为解码器隐藏层的初始输入
+        # Encoder output is discarded, the last hidden state is used as the initial input for the decoder hidden layer
         return outputs, hiddens
 
     def initHidden(self, batch_size, num_nodes, hidden_dim):
         '''
-        建立RNN初始出入的隐藏层，该隐藏层不需要计算梯度
-        :param batch_size:
-        :param num_nodes:
-        :param hidden_dim:
-        :return:
+        Initialize the RNN hidden layer that doesn't require gradient computation
+        
+        :param batch_size: Size of the batch
+        :param num_nodes: Number of nodes in the graph
+        :param hidden_dim: Dimension of the hidden state
+        :return: Initialized hidden state
         '''
         use_gpu = torch.cuda.is_available()
         if use_gpu:

@@ -140,7 +140,6 @@ if __name__ == "__main__":
             norm=cfg["model"]["dyn_norm"],
             use_curriculum_learning=cfg["train"]["use_curriculum_learning"],
             cl_decay_steps=cfg["train"]["cl_decay_steps"],
-            ablation_config=cfg["ablation"] ,
         )
     elif name_model == "G":
         model = DummyGRU(
@@ -157,6 +156,7 @@ if __name__ == "__main__":
             output_seq_len=num_for_predict,
         )
     
+    simple_model = 'dummy' in model_name.lower() or 'agcrn' in model_name.lower()
     # Multi-threaded training
     val_mae_list = []
     val_mape_list = []
@@ -181,6 +181,7 @@ if __name__ == "__main__":
                 device,
                 logger,
                 cfg,
+                simple_model = simple_model
             )
         val_mae_list.append(val_mae)
         val_mape_list.append(val_mape)

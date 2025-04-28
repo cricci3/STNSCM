@@ -1,0 +1,48 @@
+base_path: data/train_data/NYC
+data:
+  cluster_num: 54
+  freq: 30min
+  name: nyc_bike
+  num_for_predict: 54
+  num_for_target: 2
+  num_of_days: 1
+  num_of_hours: 1
+  num_of_weeks: 1
+  num_shift: 2
+  points_per_hour: 2
+  test_batch_size: 64
+  train_batch_size: 64
+  val_batch_size: 64
+dataset_name: all_data_r1_d1_w1_30min.npz
+device: mps
+expid: 1
+log_level: INFO
+model:
+  hidden_dim: 64
+  input_dim: 2
+  loss_type: mse
+  output_dim: 2
+  time_dim: 0
+model_name: agcrn
+runs: 1
+save: data/ckpt/NYC
+train:
+  base_lr: 0.0001
+  best_mode: ''
+  cl_decay_steps: 0
+  epoch_start: 0
+  epochs: 30
+  global_step: 0
+  load_initial: false
+  lr_decay_ratio: 0.5
+  max_grad_norm: 5
+  milestones:
+  - 10
+  - 20
+  min_learning_rate: 1.0e-05
+  new_training: true
+  print_every: 1
+  test_only: false
+  tolerance: 10
+  use_curriculum_learning: false
+  weight_decay: 0.0001

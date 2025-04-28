@@ -68,7 +68,8 @@ preprocess:
 train:
     base_lr: 0.001
     best_mode: data/ckpt/NYC/NYC-model.pth
-    test_only: True
+    #best_mode: data/ckpt/NYC/NYC-model_ablation1.pth
+    test_only: False
 
     cl_decay_steps: 5000
     epoch_start: 0
@@ -90,7 +91,7 @@ train:
     use_curriculum_learning: true
     weight_decay: 0.0001
 
-ablation:
-    use_dynamic_graph: true
-    use_counterfactual: true
-    use_input_gate: true
+# ablation:
+#     use_dynamic_graph: false
+#     use_counterfactual: true
+#     use_input_gate: true

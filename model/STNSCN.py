@@ -9,11 +9,11 @@ Created Date : 2021/11/14 23:21
 Author       : Yu Zhao 
 Email        : yzhao@buaa.edu.cn
 ==================================================================
-Descriptions :
-
+Description  : Main model implementation for Spatial-Temporal Neural 
+               Network with Structural Context Network (STNSCN)
 ==================================================================
 TODO List:
-   Date      	           Comments                        Finish
+   Date                       Comments                        Finish
    
    
    
@@ -35,7 +35,7 @@ class STNSCN(nn.Module):
                  dropout_prob, dropout_type, device, alpha=1, use_transform=True,
                  static_norm_adjs=None,
                  norm='D-1',
-                 use_curriculum_learning=True, cl_decay_steps=4000,ablation_config=None):
+                 use_curriculum_learning=True, cl_decay_steps=4000):
 
         super(STNSCN, self).__init__()
 
@@ -49,11 +49,6 @@ class STNSCN(nn.Module):
         self.seq_length = num_for_predict
 
         self.use_transform = use_transform
-        self.ablation_config = ablation_config if ablation_config is not None else {
-        "use_dynamic_graph": True,
-        "use_counterfactual": True,
-        "use_input_gate": True,
-    }
         self.device = device
 
         node_num = static_norm_adjs[0].shape[0]
@@ -72,7 +67,6 @@ class STNSCN(nn.Module):
                                dropout_type,
                                fusion_mode,
                                node_num,
-                               ablation_config,
                                static_norm_adjs,
                                norm,
                                device,
@@ -95,7 +89,6 @@ class STNSCN(nn.Module):
                                static_norm_adjs,
                                norm,
                                use_curriculum_learning,
-                               ablation_config,
                                cl_decay_steps)
 
 
@@ -117,7 +110,7 @@ class STNSCN(nn.Module):
             x_time = x_time.unsqueeze(dim=1).repeat(1, node_num, 1, 1)
             target_time = target_time.unsqueeze(dim=1).repeat(1, node_num, 1, 1)
 
-        # 编码器输出丢弃， [batch, RNN_layer, node_num, num_pred, hidden_channels]
+        # Encoder output is discarded, [batch, RNN_layer, node_num, num_pred, hidden_channels]
         outputs, encoder_hiddens = self.encoder(x, x_time, self.seq_length)
 
         # [batch, RNN_layer, node_num, num_pred, hidden_channels]
@@ -130,11 +123,15 @@ class STNSCN(nn.Module):
         elif self.use_transform == False:
             encoder_hiddens = encoder_hiddens[:, :, :, -1, :]
 
-        # 解码器输入应为前一个解码器的输出，训练阶段使用真实label作为解码器输入，初始输入是用离预测最近的前一个时间点
+        # Decoder input should be the output of the previous decoder
+        # During training, real labels are used as decoder input
+        # Initial input uses the time point closest to prediction
         # batch_size, node_num, num_for_predict, dim
         GO_decoder_input = torch.zeros((batch_size, node_num, 1, self.in_channels), device=self.device)
 
-        # 计划性学习，逐步增加输入序列长度，并且按照一定几率使用label作为解码器输入，否则使用前一个时间步解码器输出作为下一个时间步的输入
+        # Curriculum learning: gradually increase input sequence length
+        # and use label as decoder input with certain probability
+        # Otherwise, use the previous time step's decoder output as the input for the next time step
         outputs_final= self.decoder(GO_decoder_input, target_time, target_cl, encoder_hiddens,
                                     task_level, global_step)
 

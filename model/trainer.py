@@ -7,7 +7,7 @@ import os
 
 from model.tester import model_val, model_test
 
-def baseline_train(runid, model, model_name, dataloader, static_norm_adjs, device, logger, cfg):
+def baseline_train(runid, model, model_name, dataloader, static_norm_adjs, device, logger, cfg,simple_model):
 
     DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'mps')
     logger.info("Start training...")
@@ -74,10 +74,17 @@ def baseline_train(runid, model, model_name, dataloader, static_norm_adjs, devic
                 x, target = batch
                 x_time = target_time = pos = target_cl = None
 
-            x = x.to(device)
-            target = target.to(device)
+            x = x.to(engine.device)
+            x_time = x_time.to(engine.device)
+            target = target.to(engine.device)
+            target_time = target_time.to(engine.device)
 
-            metrics = engine.train(input=x, target=target)
+            
+            if simple_model:
+                metrics = engine.train(input=x, target=target)
+            else:
+                metrics = engine.train(input=x, input_time=x_time, target=target, target_time=target_time, target_cl=target_cl)
+
 
             train_loss.append(metrics[0])
             train_mae.append(metrics[1])
