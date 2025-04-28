@@ -176,13 +176,7 @@ class GraphGateRNN(nn.Module):
             batch_size, node_num, _, in_channels = input.shape
 
         x = self.input_process(x, x_time, self.fusion_mode)
-
-        # # Debugging Hidden_State shape
-        # print(f"Hidden_State shape: {Hidden_State.shape}, size: {Hidden_State.numel()}")
-        # print(f"Expected shape product: {batch_size * node_num * self.hidden_channels}")
-
         if Hidden_State.numel() != batch_size * node_num * self.hidden_channels:
-            #print(f"WARNING: Hidden_State size mismatch. Reinitializing with correct shape.")
             Hidden_State = torch.zeros(batch_size, node_num, self.hidden_channels, device=DEVICE)
         else:
             if Hidden_State.dim() == 2:
