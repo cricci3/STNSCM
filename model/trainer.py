@@ -7,7 +7,7 @@ import os
 
 from model.tester import model_val, model_test
 
-def baseline_train(runid, model, model_name, dataloader, static_norm_adjs, device, logger, cfg):
+def baseline_train(runid, model, model_name, dataloader, static_norm_adjs, device, logger, cfg,simple_model):
 
     DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'mps')
     logger.info("Start training...")
@@ -16,7 +16,6 @@ def baseline_train(runid, model, model_name, dataloader, static_norm_adjs, devic
     os.makedirs(save_path, exist_ok=True)
     scaler = dataloader['scaler']
 
-    # Selezione dinamica del Trainer
     if 'dummy' in cfg['model_name'].lower() or 'agcrn' in cfg['model_name'].lower():
         from model.helper import SimpleTrainer as Trainer
 
@@ -74,10 +73,21 @@ def baseline_train(runid, model, model_name, dataloader, static_norm_adjs, devic
                 x, target = batch
                 x_time = target_time = pos = target_cl = None
 
-            x = x.to(device)
-            target = target.to(device)
+            x = x.to(engine.device)
+            target = target.to(engine.device)
+            if x_time is not None:
+                x_time = x_time.to(engine.device)
+            if target_time is not None:
+                target_time = target_time.to(engine.device)
+            if target_cl is not None:
+                target_cl = target_cl.to(engine.device)
 
-            metrics = engine.train(input=x, target=target)
+            
+            if simple_model:
+                metrics = engine.train(input=x, target=target)
+            else:
+                metrics = engine.train(input=x, input_time=x_time, target=target, target_time=target_time, target_cl=target_cl)
+
 
             train_loss.append(metrics[0])
             train_mae.append(metrics[1])
@@ -85,7 +95,11 @@ def baseline_train(runid, model, model_name, dataloader, static_norm_adjs, devic
             train_rmse.append(metrics[3])
             global_step += 1
         
-        output = engine.model(x)
+        if simple_model:
+            output = engine.model(x)
+        else:
+            output = engine.model(x, x_time, target_time, target_cl=target_cl, task_level=2, global_step=global_step)
+
         print("Output stats - min:", output.min().item(), 
                 "max:", output.max().item(), 
                 "mean:", output.mean().item())
