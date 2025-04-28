@@ -42,6 +42,7 @@ class Encoder(nn.Module):
                  num_of_weeks, num_of_days, num_of_hours, num_for_predict, dropout_prob, dropout_type,
                  fusion_mode,
                  node_num,
+                 ablation_config,
                  static_norm_adjs,
                  norm, device):
         super(Encoder, self).__init__()
@@ -52,7 +53,7 @@ class Encoder(nn.Module):
         self.h_length = num_of_hours * num_for_predict
 
         self.seq_length = num_for_predict
-
+        self.ablation_config=self.ablation_config
         self.static_norm_adjs = static_norm_adjs
 
         self.in_channels = in_channels
@@ -115,8 +116,10 @@ class Encoder(nn.Module):
             for j, rnn_cell in enumerate(self.RNNCell):
                 # 编码器输入特征维度为[batch, node_num, 3, in_channels]
                 cur_h = Hidden_State[j]
+                if self.ablation_config and not self.ablation_config.get("use_input_gate", True):
+                    input_time = None
                 cur_out, cur_h = rnn_cell(input_cur, input_time, cur_h)
-
+         
                 Hidden_State[j] = cur_h
                 input_cur = F.relu(cur_out, inplace=True)
                 input_time = None

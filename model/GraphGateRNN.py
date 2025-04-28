@@ -43,6 +43,7 @@ class GraphGateRNN(nn.Module):
                  dropout_prob=0.3,
                  fusion_mode=2,
                  node_num=54,
+                 ablation_config=None,
                  static_norm_adjs=None,
                  alpha=1,
                  norm='D-1'):
@@ -54,7 +55,7 @@ class GraphGateRNN(nn.Module):
 
         self.fusion_mode = fusion_mode
         self.dropout_type = dropout_type
-
+        self.ablation_config = ablation_config
         self.num_of_weeks = num_of_weeks
         self.num_of_days = num_of_days
         self.num_of_hours = num_of_hours
@@ -90,14 +91,17 @@ class GraphGateRNN(nn.Module):
             self.info_FC2 = nn.Linear(hidden_channels, hidden_channels)
 
 
-
-        self.dynGraph = DynamicGraphGenerate(hidden_channels,
+        if self.ablation_config and not self.ablation_config.get("use_dynamic_graph", True):
+            self.dynGraph = None
+        else:
+            self.dynGraph = DynamicGraphGenerate(hidden_channels,
                                              hidden_channels,
                                              dropout_prob,
                                              node_num=node_num,
                                              reduction=16,
                                              alpha=alpha,
                                              norm=norm)
+            
         self.static_norm_adjs = static_norm_adjs
         # RNN门控图卷积
         self.GCN_update1 = GCN(hidden_channels*2, hidden_channels, gcn_depth, dropout_prob, len(static_norm_adjs), type='RNN')
@@ -215,7 +219,11 @@ class GraphGateRNN(nn.Module):
         combined = torch.cat((x, Hidden_State), -1)
 
         # Graph generation gate - different graph for different batches, dimension [batch, node_num, node_num]
-        dyn_norm_adj, dyn_adj = self.dynGraph(x, Hidden_State)
+        if self.dynGraph is not None:
+            dyn_norm_adj, dyn_adj = self.dynGraph(x, Hidden_State)
+        else:
+            dyn_norm_adj = None
+
         dyn_norm_adjT = dyn_norm_adj.transpose(1, 2)
 
         # Multiple graph collection

@@ -34,14 +34,14 @@ class Decoder(nn.Module):
                  node_num,
                  static_norm_adjs,
                  norm,
-                 use_curriculum_learning, cl_decay_steps):
+                 use_curriculum_learning, cl_decay_steps,ablation_config=None):
         super(Decoder, self).__init__()
 
         self.dropout = nn.Dropout(p=dropout_prob)
         self.w_length = num_of_weeks * num_for_predict
         self.d_length = num_of_days * num_for_predict
         self.h_length = num_of_hours * num_for_predict
-
+        self.ablation_config = ablation_config
         self.static_norm_adjs = static_norm_adjs
 
         self.in_channels = in_channels
@@ -121,7 +121,11 @@ class Decoder(nn.Module):
                     prob = 0.5
                 if c < prob:
                     # target_cl = [batch, node_num, num_for_target, 2]
-                    decoder_input = target_cl[:, :, i:i + 1, :]
+                    if self.ablation_config and self.ablation_config.get("use_counterfactual", True):
+                        decoder_input = target_cl[:, :, i:i + 1, :]
+                    else:
+                        decoder_input = target_cl[:, :, i:i + 1, :]
+
 
         # [batch, num_node, num_for_target/task_level, output_dim]
         outputs_final = torch.stack(outputs_final, dim=2)

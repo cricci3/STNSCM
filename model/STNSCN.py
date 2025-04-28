@@ -35,7 +35,7 @@ class STNSCN(nn.Module):
                  dropout_prob, dropout_type, device, alpha=1, use_transform=True,
                  static_norm_adjs=None,
                  norm='D-1',
-                 use_curriculum_learning=True, cl_decay_steps=4000):
+                 use_curriculum_learning=True, cl_decay_steps=4000,ablation_config=None):
 
         super(STNSCN, self).__init__()
 
@@ -49,6 +49,11 @@ class STNSCN(nn.Module):
         self.seq_length = num_for_predict
 
         self.use_transform = use_transform
+        self.ablation_config = ablation_config if ablation_config is not None else {
+        "use_dynamic_graph": True,
+        "use_counterfactual": True,
+        "use_input_gate": True,
+    }
         self.device = device
 
         node_num = static_norm_adjs[0].shape[0]
@@ -67,6 +72,7 @@ class STNSCN(nn.Module):
                                dropout_type,
                                fusion_mode,
                                node_num,
+                               ablation_config,
                                static_norm_adjs,
                                norm,
                                device,
@@ -89,6 +95,7 @@ class STNSCN(nn.Module):
                                static_norm_adjs,
                                norm,
                                use_curriculum_learning,
+                               ablation_config,
                                cl_decay_steps)
 
 

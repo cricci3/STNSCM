@@ -140,6 +140,7 @@ if __name__ == "__main__":
             norm=cfg["model"]["dyn_norm"],
             use_curriculum_learning=cfg["train"]["use_curriculum_learning"],
             cl_decay_steps=cfg["train"]["cl_decay_steps"],
+            ablation_config=cfg["ablation"] ,
         )
     elif name_model == "G":
         model = DummyGRU(

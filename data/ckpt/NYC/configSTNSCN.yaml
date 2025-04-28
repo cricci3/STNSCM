@@ -89,3 +89,8 @@ train:
     tolerance: 100
     use_curriculum_learning: true
     weight_decay: 0.0001
+
+ablation:
+    use_dynamic_graph: true
+    use_counterfactual: true
+    use_input_gate: true
