@@ -12,8 +12,8 @@ data:
     freq: 30min
     name: nyc_bike
     cluster_num: 54
-    num_for_predict: 54      # Q
-    num_for_target: 2       # P
+    num_for_predict: 54      
+    num_for_target: 2       
     num_of_days: 1
     num_of_hours: 1
     num_of_weeks: 1
@@ -24,21 +24,21 @@ data:
     val_batch_size: 64
 
 model:
-    input_dim: 2            # inflow, outflow
+    input_dim: 2            
     hidden_dim: 64
     output_dim: 2
-    loss_type: mse          # per modelli dummy è meglio 'mse'
+    loss_type: mse          
     time_dim: 0
 
 
 train:
     base_lr: 0.0001
-    best_mode: ""           # <-- importante! non caricare pesi salvati da STNSCN
-    test_only: false        # <-- vogliamo fare anche training
+    best_mode: ""           
+    test_only: false        
 
     cl_decay_steps: 0
     epoch_start: 0
-    epochs: 30              # meno epoche, più rapido
+    epochs: 30              
     global_step: 0
     load_initial: false
     lr_decay_ratio: 0.5

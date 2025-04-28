@@ -3,7 +3,7 @@ runs: 2
 log_level: INFO
 base_path: data/train_data/NYC
 dataset_name: all_data_r1_d1_w1_30min.npz
-# 设置测试模型
+# General Settings
 model_name: STNSCN
 device: mps
 save: data/ckpt/NYC
