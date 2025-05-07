@@ -1,0 +1,7 @@
+Run ID: 1
+Device used: cuda
+Total training time: 2.27 hours
+Total validation time: 0.10 hours
+Peak GPU memory usage: 2.03 GB
+Peak CPU memory usage: 0.53 GB
+Total model parameters: 419218

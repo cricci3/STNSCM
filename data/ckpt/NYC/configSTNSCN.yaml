@@ -5,7 +5,7 @@ base_path: data/train_data/NYC
 dataset_name: all_data_r1_d1_w1_30min.npz
 # General Settings
 model_name: STNSCN
-device: mps
+device: cuda:0
 save: data/ckpt/NYC
 
 data:
@@ -68,7 +68,6 @@ preprocess:
 train:
     base_lr: 0.001
     best_mode: data/ckpt/NYC/NYC-model.pth
-    #best_mode: data/ckpt/NYC/NYC-model_ablation1.pth
     test_only: False
 
     cl_decay_steps: 5000
@@ -91,7 +90,9 @@ train:
     use_curriculum_learning: true
     weight_decay: 0.0001
 
-# ablation:
+ablation:
+    use_geo_affinity_matrix: True
+    use_origin_destination_matrix: False
 #     use_dynamic_graph: false
 #     use_counterfactual: true
 #     use_input_gate: true

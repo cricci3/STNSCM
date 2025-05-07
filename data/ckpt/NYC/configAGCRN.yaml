@@ -5,15 +5,15 @@ base_path: data/train_data/NYC
 dataset_name: all_data_r1_d1_w1_30min.npz
 
 model_name: agcrn
-device: mps
+device: cuda:0
 save: data/ckpt/NYC
 
 data:
     freq: 30min
     name: nyc_bike
     cluster_num: 54
-    num_for_predict: 54      
-    num_for_target: 2       
+    num_for_predict: 54
+    num_for_target: 2
     num_of_days: 1
     num_of_hours: 1
     num_of_weeks: 1
@@ -24,21 +24,20 @@ data:
     val_batch_size: 64
 
 model:
-    input_dim: 2            
+    input_dim: 2
     hidden_dim: 64
     output_dim: 2
-    loss_type: mse          
+    loss_type: mse
     time_dim: 0
-
 
 train:
     base_lr: 0.0001
-    best_mode: ""           
-    test_only: false        
+    best_mode: ''
+    test_only: false
 
     cl_decay_steps: 0
     epoch_start: 0
-    epochs: 30              
+    epochs: 30
     global_step: 0
     load_initial: false
     lr_decay_ratio: 0.5
