@@ -119,28 +119,10 @@ if __name__ == "__main__":
     # Initialize the model based on user selection
     if name_model == "S":
         model = STNSCN(
-            input_dim=cfg["model"]["input_dim"],
-            time_dim=cfg["model"]["time_dim"],
-            hidden_dim=cfg["model"]["hidden_dim"],
-            output_dim=cfg["model"]["output_dim"],
-            gcn_depth=cfg["model"]["gcn_depth"],
-            alpha=cfg["model"]["alpha"],
-            use_transform=cfg["model"]["use_transform"],
-            fusion_mode=cfg["model"]["fusion_mode"],
-            num_of_head=cfg["model"]["num_of_head"],
-            dropout_prob=cfg["model"]["dropout_prob"],
-            dropout_type=cfg["model"]["dropout_type"],
-            device=device,
-            num_of_weeks=cfg["data"]["num_of_weeks"],
-            num_of_days=cfg["data"]["num_of_days"],
-            num_of_hours=cfg["data"]["num_of_hours"],
-            num_for_predict=cfg["data"]["num_for_predict"],
-            num_for_target=cfg["data"]["num_for_target"],
-            static_norm_adjs=static_norm_adjs,
-            norm=cfg["model"]["dyn_norm"],
-            use_curriculum_learning=cfg["train"]["use_curriculum_learning"],
-            cl_decay_steps=cfg["train"]["cl_decay_steps"],
+            config=cfg,
+            static_norm_adjs=static_norm_adjs
         )
+
     elif name_model == "G":
         model = DummyGRU(
             input_dim=cfg["model"]["input_dim"],
