@@ -1,0 +1,860 @@
+2025-04-25 10:43:55,607 - __main__ - INFO - Log directory: data/ckpt/NYC/agcrn/30min/log
+2025-04-25 10:43:55,611 - __main__ - INFO - {'expid': 1, 'runs': 1, 'log_level': 'INFO', 'base_path': 'data/train_data/NYC', 'dataset_name': 'all_data_r1_d1_w1_30min.npz', 'model_name': 'agcrn', 'device': 'mps', 'save': 'data/ckpt/NYC', 'data': {'freq': '30min', 'name': 'nyc_bike', 'cluster_num': 54, 'num_for_predict': 54, 'num_for_target': 2, 'num_of_days': 1, 'num_of_hours': 1, 'num_of_weeks': 1, 'num_shift': 2, 'points_per_hour': 2, 'test_batch_size': 64, 'train_batch_size': 64, 'val_batch_size': 64}, 'model': {'input_dim': 2, 'hidden_dim': 64, 'output_dim': 2, 'loss_type': 'mse', 'time_dim': 0}, 'train': {'base_lr': 0.0001, 'best_mode': '', 'test_only': False, 'cl_decay_steps': 0, 'epoch_start': 0, 'epochs': 200, 'global_step': 0, 'load_initial': False, 'lr_decay_ratio': 0.5, 'max_grad_norm': 5, 'milestones': [10, 20], 'min_learning_rate': 1e-05, 'new_training': True, 'print_every': 1, 'tolerance': 10, 'use_curriculum_learning': False, 'weight_decay': 0.0001}}
+2025-04-25 10:43:55,611 - __main__ - INFO - data/train_data/NYC/all_data_r1_d1_w1_30min.npz
+2025-04-25 10:43:55,611 - __main__ - INFO - data/ckpt/NYC/agcrn/30min/log
+2025-04-25 10:43:56,471 - __main__ - INFO - ('train x', (13743, 54, 18, 2))
+2025-04-25 10:43:56,471 - __main__ - INFO - ('train target', (13743, 54, 2, 2))
+2025-04-25 10:43:56,471 - __main__ - INFO - ('train x time', (13743, 18, 14))
+2025-04-25 10:43:56,471 - __main__ - INFO - ('train target time', (13743, 2, 14))
+2025-04-25 10:43:56,471 - __main__ - INFO - ('train pos', (13743, 4))
+2025-04-25 10:43:56,471 - __main__ - INFO - 
+
+2025-04-25 10:43:56,471 - __main__ - INFO - ('val x', (1718, 54, 18, 2))
+2025-04-25 10:43:56,471 - __main__ - INFO - ('val target', (1718, 54, 2, 2))
+2025-04-25 10:43:56,471 - __main__ - INFO - ('val x time', (1718, 18, 14))
+2025-04-25 10:43:56,471 - __main__ - INFO - ('val target time', (1718, 2, 14))
+2025-04-25 10:43:56,471 - __main__ - INFO - ('val pos', (1718, 4))
+2025-04-25 10:43:56,471 - __main__ - INFO - 
+
+2025-04-25 10:43:56,471 - __main__ - INFO - ('test x', (1718, 54, 18, 2))
+2025-04-25 10:43:56,471 - __main__ - INFO - ('test target', (1718, 54, 2, 2))
+2025-04-25 10:43:56,471 - __main__ - INFO - ('test x time', (1718, 18, 14))
+2025-04-25 10:43:56,471 - __main__ - INFO - ('test target time', (1718, 2, 14))
+2025-04-25 10:43:56,471 - __main__ - INFO - ('test pos', (1718, 4))
+2025-04-25 10:43:56,471 - __main__ - INFO - 
+
+2025-04-25 10:43:56,471 - __main__ - INFO - scaler.mean : 23.023004191583954, scaler.std : 42.49082466881887
+2025-04-25 10:43:56,471 - __main__ - INFO - 
+
+2025-04-25 10:43:56,471 - __main__ - INFO - time feature index : {'time': (0, 3), 'weather_numerical': (3, 7), 'temperature': (7, 9), 'weather_type': (9, 14)}
+2025-04-25 10:43:56,472 - __main__ - INFO - time weather data : [[Timestamp('2019-01-01 00:00:00') 1 0 ... 0.0 0.0 0.0]
+ [Timestamp('2019-01-01 00:30:00') 1 1 ... 0.0 0.0 0.0]
+ [Timestamp('2019-01-01 01:00:00') 1 2 ... 0.0 0.0 0.0]
+ ...
+ [Timestamp('2019-12-31 22:30:00') 1 45 ... 0.0 0.0 0.0]
+ [Timestamp('2019-12-31 23:00:00') 1 46 ... 0.0 0.0 0.0]
+ [Timestamp('2019-12-31 23:30:00') 1 47 ... 0.0 0.0 0.0]]
+2025-04-25 10:43:56,559 - __main__ - INFO - agcrn
+2025-04-25 10:43:56,559 - __main__ - INFO - Start training...
+2025-04-25 10:44:56,743 - __main__ - INFO - Start validation phase.....
+2025-04-25 10:45:00,443 - __main__ - INFO - [Val] Loss: 2147.2665, MAE: 21.2568, MAPE: 99.1324, RMSE: 44.5926
+2025-04-25 10:45:00,448 - __main__ - INFO - Epoch 000, Train Loss: 2349.0197, Valid Loss: 2147.2665
+2025-04-25 10:45:00,456 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch0_ValLoss:2147.2665.pth
+2025-04-25 10:45:56,510 - __main__ - INFO - Start validation phase.....
+2025-04-25 10:46:00,261 - __main__ - INFO - [Val] Loss: 2137.6068, MAE: 21.0896, MAPE: 98.2105, RMSE: 44.4835
+2025-04-25 10:46:00,261 - __main__ - INFO - Epoch 001, Train Loss: 2338.2992, Valid Loss: 2137.6068
+2025-04-25 10:46:00,269 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch1_ValLoss:2137.6068.pth
+2025-04-25 10:46:56,016 - __main__ - INFO - Start validation phase.....
+2025-04-25 10:46:59,689 - __main__ - INFO - [Val] Loss: 2128.9544, MAE: 20.9487, MAPE: 97.3416, RMSE: 44.3844
+2025-04-25 10:46:59,690 - __main__ - INFO - Epoch 002, Train Loss: 2329.1569, Valid Loss: 2128.9544
+2025-04-25 10:46:59,697 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch2_ValLoss:2128.9544.pth
+2025-04-25 10:47:56,036 - __main__ - INFO - Start validation phase.....
+2025-04-25 10:47:59,903 - __main__ - INFO - [Val] Loss: 2119.5796, MAE: 20.8055, MAPE: 96.4077, RMSE: 44.2771
+2025-04-25 10:47:59,904 - __main__ - INFO - Epoch 003, Train Loss: 2320.0599, Valid Loss: 2119.5796
+2025-04-25 10:47:59,912 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch3_ValLoss:2119.5796.pth
+2025-04-25 10:48:57,190 - __main__ - INFO - Start validation phase.....
+2025-04-25 10:49:00,946 - __main__ - INFO - [Val] Loss: 2109.5480, MAE: 20.6629, MAPE: 95.3858, RMSE: 44.1636
+2025-04-25 10:49:00,947 - __main__ - INFO - Epoch 004, Train Loss: 2308.1241, Valid Loss: 2109.5480
+2025-04-25 10:49:00,953 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch4_ValLoss:2109.5480.pth
+2025-04-25 10:49:57,753 - __main__ - INFO - Start validation phase.....
+2025-04-25 10:50:01,524 - __main__ - INFO - [Val] Loss: 2098.2994, MAE: 20.5162, MAPE: 94.2679, RMSE: 44.0367
+2025-04-25 10:50:01,525 - __main__ - INFO - Epoch 005, Train Loss: 2298.2486, Valid Loss: 2098.2994
+2025-04-25 10:50:01,532 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch5_ValLoss:2098.2994.pth
+2025-04-25 10:50:57,566 - __main__ - INFO - Start validation phase.....
+2025-04-25 10:51:01,290 - __main__ - INFO - [Val] Loss: 2089.0998, MAE: 20.4145, MAPE: 93.3223, RMSE: 43.9309
+2025-04-25 10:51:01,290 - __main__ - INFO - Epoch 006, Train Loss: 2287.5603, Valid Loss: 2089.0998
+2025-04-25 10:51:01,297 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch6_ValLoss:2089.0998.pth
+2025-04-25 10:51:57,472 - __main__ - INFO - Start validation phase.....
+2025-04-25 10:52:01,250 - __main__ - INFO - [Val] Loss: 2076.8460, MAE: 20.2720, MAPE: 92.0563, RMSE: 43.7919
+2025-04-25 10:52:01,251 - __main__ - INFO - Epoch 007, Train Loss: 2273.8418, Valid Loss: 2076.8460
+2025-04-25 10:52:01,259 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch7_ValLoss:2076.8460.pth
+2025-04-25 10:52:57,023 - __main__ - INFO - Start validation phase.....
+2025-04-25 10:53:00,672 - __main__ - INFO - [Val] Loss: 2066.7294, MAE: 20.1717, MAPE: 91.0577, RMSE: 43.6740
+2025-04-25 10:53:00,672 - __main__ - INFO - Epoch 008, Train Loss: 2262.7699, Valid Loss: 2066.7294
+2025-04-25 10:53:00,678 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch8_ValLoss:2066.7294.pth
+2025-04-25 10:53:56,846 - __main__ - INFO - Start validation phase.....
+2025-04-25 10:54:00,584 - __main__ - INFO - [Val] Loss: 2057.8618, MAE: 20.0841, MAPE: 90.1364, RMSE: 43.5777
+2025-04-25 10:54:00,584 - __main__ - INFO - Epoch 009, Train Loss: 2251.6484, Valid Loss: 2057.8618
+2025-04-25 10:54:00,593 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch9_ValLoss:2057.8618.pth
+2025-04-25 10:54:56,519 - __main__ - INFO - Start validation phase.....
+2025-04-25 10:55:00,244 - __main__ - INFO - [Val] Loss: 2038.1810, MAE: 19.8875, MAPE: 87.9993, RMSE: 43.3481
+2025-04-25 10:55:00,244 - __main__ - INFO - Epoch 010, Train Loss: 2238.9086, Valid Loss: 2038.1810
+2025-04-25 10:55:00,251 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch10_ValLoss:2038.1810.pth
+2025-04-25 10:55:56,461 - __main__ - INFO - Start validation phase.....
+2025-04-25 10:56:00,190 - __main__ - INFO - [Val] Loss: 2021.6906, MAE: 19.7169, MAPE: 86.4029, RMSE: 43.1584
+2025-04-25 10:56:00,190 - __main__ - INFO - Epoch 011, Train Loss: 2218.4623, Valid Loss: 2021.6906
+2025-04-25 10:56:00,199 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch11_ValLoss:2021.6906.pth
+2025-04-25 10:56:56,560 - __main__ - INFO - Start validation phase.....
+2025-04-25 10:57:00,268 - __main__ - INFO - [Val] Loss: 2004.4408, MAE: 19.5680, MAPE: 84.7190, RMSE: 42.9650
+2025-04-25 10:57:00,269 - __main__ - INFO - Epoch 012, Train Loss: 2198.7151, Valid Loss: 2004.4408
+2025-04-25 10:57:00,275 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch12_ValLoss:2004.4408.pth
+2025-04-25 10:57:56,503 - __main__ - INFO - Start validation phase.....
+2025-04-25 10:58:00,232 - __main__ - INFO - [Val] Loss: 1987.8363, MAE: 19.4318, MAPE: 83.1434, RMSE: 42.7741
+2025-04-25 10:58:00,233 - __main__ - INFO - Epoch 013, Train Loss: 2181.4236, Valid Loss: 1987.8363
+2025-04-25 10:58:00,240 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch13_ValLoss:1987.8363.pth
+2025-04-25 10:58:56,085 - __main__ - INFO - Start validation phase.....
+2025-04-25 10:58:59,777 - __main__ - INFO - [Val] Loss: 1975.4840, MAE: 19.3385, MAPE: 81.8540, RMSE: 42.6305
+2025-04-25 10:58:59,778 - __main__ - INFO - Epoch 014, Train Loss: 2163.9525, Valid Loss: 1975.4840
+2025-04-25 10:58:59,785 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch14_ValLoss:1975.4840.pth
+2025-04-25 10:59:55,980 - __main__ - INFO - Start validation phase.....
+2025-04-25 10:59:59,692 - __main__ - INFO - [Val] Loss: 2001.2043, MAE: 19.6684, MAPE: 85.8113, RMSE: 42.9492
+2025-04-25 10:59:59,693 - __main__ - INFO - Epoch 015, Train Loss: 2158.9513, Valid Loss: 2001.2043
+2025-04-25 10:59:59,693 - __main__ - INFO - No improvement (1/10)
+2025-04-25 11:00:55,423 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:00:59,182 - __main__ - INFO - [Val] Loss: 2022.0350, MAE: 19.9697, MAPE: 87.5191, RMSE: 43.1819
+2025-04-25 11:00:59,183 - __main__ - INFO - Epoch 016, Train Loss: 2210.9985, Valid Loss: 2022.0350
+2025-04-25 11:00:59,183 - __main__ - INFO - No improvement (2/10)
+2025-04-25 11:01:55,430 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:01:59,135 - __main__ - INFO - [Val] Loss: 2022.9155, MAE: 19.8156, MAPE: 87.4571, RMSE: 43.1816
+2025-04-25 11:01:59,135 - __main__ - INFO - Epoch 017, Train Loss: 2209.4899, Valid Loss: 2022.9155
+2025-04-25 11:01:59,136 - __main__ - INFO - No improvement (3/10)
+2025-04-25 11:02:55,254 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:02:59,079 - __main__ - INFO - [Val] Loss: 2026.2500, MAE: 19.8479, MAPE: 87.0599, RMSE: 43.2257
+2025-04-25 11:02:59,079 - __main__ - INFO - Epoch 018, Train Loss: 2210.1782, Valid Loss: 2026.2500
+2025-04-25 11:02:59,079 - __main__ - INFO - No improvement (4/10)
+2025-04-25 11:03:56,599 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:04:00,250 - __main__ - INFO - [Val] Loss: 2006.1847, MAE: 19.6571, MAPE: 85.2414, RMSE: 42.9918
+2025-04-25 11:04:00,251 - __main__ - INFO - Epoch 019, Train Loss: 2200.0682, Valid Loss: 2006.1847
+2025-04-25 11:04:00,251 - __main__ - INFO - No improvement (5/10)
+2025-04-25 11:04:57,074 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:05:00,765 - __main__ - INFO - [Val] Loss: 2004.9067, MAE: 19.6320, MAPE: 84.8371, RMSE: 42.9699
+2025-04-25 11:05:00,766 - __main__ - INFO - Epoch 020, Train Loss: 2187.2716, Valid Loss: 2004.9067
+2025-04-25 11:05:00,766 - __main__ - INFO - No improvement (6/10)
+2025-04-25 11:05:57,747 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:06:01,466 - __main__ - INFO - [Val] Loss: 1975.8914, MAE: 19.3905, MAPE: 81.7146, RMSE: 42.6237
+2025-04-25 11:06:01,466 - __main__ - INFO - Epoch 021, Train Loss: 2172.8185, Valid Loss: 1975.8914
+2025-04-25 11:06:01,466 - __main__ - INFO - No improvement (7/10)
+2025-04-25 11:06:58,235 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:07:01,932 - __main__ - INFO - [Val] Loss: 1968.5661, MAE: 19.3240, MAPE: 81.0817, RMSE: 42.5512
+2025-04-25 11:07:01,932 - __main__ - INFO - Epoch 022, Train Loss: 2151.1316, Valid Loss: 1968.5661
+2025-04-25 11:07:01,939 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch22_ValLoss:1968.5661.pth
+2025-04-25 11:07:59,015 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:08:02,726 - __main__ - INFO - [Val] Loss: 1960.9141, MAE: 19.2590, MAPE: 80.1721, RMSE: 42.4490
+2025-04-25 11:08:02,727 - __main__ - INFO - Epoch 023, Train Loss: 2141.6149, Valid Loss: 1960.9141
+2025-04-25 11:08:02,736 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch23_ValLoss:1960.9141.pth
+2025-04-25 11:08:59,421 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:09:03,081 - __main__ - INFO - [Val] Loss: 1950.3637, MAE: 19.1596, MAPE: 79.5395, RMSE: 42.3486
+2025-04-25 11:09:03,082 - __main__ - INFO - Epoch 024, Train Loss: 2132.5360, Valid Loss: 1950.3637
+2025-04-25 11:09:03,088 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch24_ValLoss:1950.3637.pth
+2025-04-25 11:10:00,054 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:10:03,786 - __main__ - INFO - [Val] Loss: 1941.2992, MAE: 19.0738, MAPE: 78.5510, RMSE: 42.2336
+2025-04-25 11:10:03,787 - __main__ - INFO - Epoch 025, Train Loss: 2122.9616, Valid Loss: 1941.2992
+2025-04-25 11:10:03,796 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch25_ValLoss:1941.2992.pth
+2025-04-25 11:11:00,460 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:11:04,153 - __main__ - INFO - [Val] Loss: 1934.2701, MAE: 18.9987, MAPE: 78.1366, RMSE: 42.1609
+2025-04-25 11:11:04,154 - __main__ - INFO - Epoch 026, Train Loss: 2113.9489, Valid Loss: 1934.2701
+2025-04-25 11:11:04,161 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch26_ValLoss:1934.2701.pth
+2025-04-25 11:12:01,024 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:12:04,760 - __main__ - INFO - [Val] Loss: 1927.5920, MAE: 18.9454, MAPE: 77.6707, RMSE: 42.0749
+2025-04-25 11:12:04,761 - __main__ - INFO - Epoch 027, Train Loss: 2106.8755, Valid Loss: 1927.5920
+2025-04-25 11:12:04,769 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch27_ValLoss:1927.5920.pth
+2025-04-25 11:13:01,355 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:13:05,032 - __main__ - INFO - [Val] Loss: 1917.9677, MAE: 18.8706, MAPE: 77.0728, RMSE: 41.9698
+2025-04-25 11:13:05,032 - __main__ - INFO - Epoch 028, Train Loss: 2097.1031, Valid Loss: 1917.9677
+2025-04-25 11:13:05,038 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch28_ValLoss:1917.9677.pth
+2025-04-25 11:14:01,831 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:14:05,545 - __main__ - INFO - [Val] Loss: 1912.2651, MAE: 18.8418, MAPE: 76.4987, RMSE: 41.8924
+2025-04-25 11:14:05,545 - __main__ - INFO - Epoch 029, Train Loss: 2089.1683, Valid Loss: 1912.2651
+2025-04-25 11:14:05,554 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch29_ValLoss:1912.2651.pth
+2025-04-25 11:15:02,137 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:15:05,760 - __main__ - INFO - [Val] Loss: 1900.1119, MAE: 18.7308, MAPE: 75.6715, RMSE: 41.7757
+2025-04-25 11:15:05,760 - __main__ - INFO - Epoch 030, Train Loss: 2081.0439, Valid Loss: 1900.1119
+2025-04-25 11:15:05,768 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch30_ValLoss:1900.1119.pth
+2025-04-25 11:16:02,465 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:16:06,181 - __main__ - INFO - [Val] Loss: 1888.3682, MAE: 18.6523, MAPE: 75.0147, RMSE: 41.6266
+2025-04-25 11:16:06,182 - __main__ - INFO - Epoch 031, Train Loss: 2071.0807, Valid Loss: 1888.3682
+2025-04-25 11:16:06,190 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch31_ValLoss:1888.3682.pth
+2025-04-25 11:17:02,811 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:17:06,514 - __main__ - INFO - [Val] Loss: 1879.5611, MAE: 18.5922, MAPE: 74.4622, RMSE: 41.5322
+2025-04-25 11:17:06,514 - __main__ - INFO - Epoch 032, Train Loss: 2059.3119, Valid Loss: 1879.5611
+2025-04-25 11:17:06,521 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch32_ValLoss:1879.5611.pth
+2025-04-25 11:18:03,373 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:18:07,089 - __main__ - INFO - [Val] Loss: 1880.0213, MAE: 18.6115, MAPE: 74.4744, RMSE: 41.5497
+2025-04-25 11:18:07,089 - __main__ - INFO - Epoch 033, Train Loss: 2053.9481, Valid Loss: 1880.0213
+2025-04-25 11:18:07,090 - __main__ - INFO - No improvement (1/10)
+2025-04-25 11:19:03,598 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:19:07,262 - __main__ - INFO - [Val] Loss: 1877.8104, MAE: 18.5736, MAPE: 73.6430, RMSE: 41.5009
+2025-04-25 11:19:07,262 - __main__ - INFO - Epoch 034, Train Loss: 2050.6807, Valid Loss: 1877.8104
+2025-04-25 11:19:07,269 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch34_ValLoss:1877.8104.pth
+2025-04-25 11:20:04,308 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:20:08,004 - __main__ - INFO - [Val] Loss: 1867.7112, MAE: 18.5116, MAPE: 73.2711, RMSE: 41.3757
+2025-04-25 11:20:08,004 - __main__ - INFO - Epoch 035, Train Loss: 2043.7472, Valid Loss: 1867.7112
+2025-04-25 11:20:08,013 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch35_ValLoss:1867.7112.pth
+2025-04-25 11:21:04,300 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:21:08,003 - __main__ - INFO - [Val] Loss: 1856.4582, MAE: 18.4236, MAPE: 72.7433, RMSE: 41.2530
+2025-04-25 11:21:08,003 - __main__ - INFO - Epoch 036, Train Loss: 2035.7424, Valid Loss: 1856.4582
+2025-04-25 11:21:08,012 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch36_ValLoss:1856.4582.pth
+2025-04-25 11:22:06,029 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:22:09,759 - __main__ - INFO - [Val] Loss: 1844.6426, MAE: 18.3645, MAPE: 72.7770, RMSE: 41.1267
+2025-04-25 11:22:09,760 - __main__ - INFO - Epoch 037, Train Loss: 2022.1621, Valid Loss: 1844.6426
+2025-04-25 11:22:09,769 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch37_ValLoss:1844.6426.pth
+2025-04-25 11:23:05,495 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:23:09,153 - __main__ - INFO - [Val] Loss: 1831.2721, MAE: 18.2878, MAPE: 71.6694, RMSE: 40.9709
+2025-04-25 11:23:09,154 - __main__ - INFO - Epoch 038, Train Loss: 2004.9359, Valid Loss: 1831.2721
+2025-04-25 11:23:09,162 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch38_ValLoss:1831.2721.pth
+2025-04-25 11:24:06,022 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:24:09,735 - __main__ - INFO - [Val] Loss: 1834.7353, MAE: 18.3340, MAPE: 71.7902, RMSE: 41.0134
+2025-04-25 11:24:09,735 - __main__ - INFO - Epoch 039, Train Loss: 1999.6784, Valid Loss: 1834.7353
+2025-04-25 11:24:09,735 - __main__ - INFO - No improvement (1/10)
+2025-04-25 11:25:06,190 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:25:09,897 - __main__ - INFO - [Val] Loss: 1827.9013, MAE: 18.2582, MAPE: 70.9662, RMSE: 40.9198
+2025-04-25 11:25:09,898 - __main__ - INFO - Epoch 040, Train Loss: 1990.8826, Valid Loss: 1827.9013
+2025-04-25 11:25:09,904 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch40_ValLoss:1827.9013.pth
+2025-04-25 11:26:06,811 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:26:10,505 - __main__ - INFO - [Val] Loss: 1820.0792, MAE: 18.2249, MAPE: 70.6595, RMSE: 40.8419
+2025-04-25 11:26:10,506 - __main__ - INFO - Epoch 041, Train Loss: 1985.9824, Valid Loss: 1820.0792
+2025-04-25 11:26:10,515 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch41_ValLoss:1820.0792.pth
+2025-04-25 11:27:07,029 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:27:10,647 - __main__ - INFO - [Val] Loss: 1811.8025, MAE: 18.1858, MAPE: 70.1479, RMSE: 40.7258
+2025-04-25 11:27:10,647 - __main__ - INFO - Epoch 042, Train Loss: 1978.7247, Valid Loss: 1811.8025
+2025-04-25 11:27:10,654 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch42_ValLoss:1811.8025.pth
+2025-04-25 11:28:06,472 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:28:10,114 - __main__ - INFO - [Val] Loss: 1799.3880, MAE: 18.0740, MAPE: 69.3821, RMSE: 40.5794
+2025-04-25 11:28:10,115 - __main__ - INFO - Epoch 043, Train Loss: 1965.5214, Valid Loss: 1799.3880
+2025-04-25 11:28:10,121 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch43_ValLoss:1799.3880.pth
+2025-04-25 11:29:07,485 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:29:11,146 - __main__ - INFO - [Val] Loss: 1794.8955, MAE: 18.0043, MAPE: 69.5168, RMSE: 40.5486
+2025-04-25 11:29:11,147 - __main__ - INFO - Epoch 044, Train Loss: 1959.5305, Valid Loss: 1794.8955
+2025-04-25 11:29:11,154 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch44_ValLoss:1794.8955.pth
+2025-04-25 11:30:06,542 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:30:10,193 - __main__ - INFO - [Val] Loss: 1783.6151, MAE: 17.9519, MAPE: 69.0297, RMSE: 40.4140
+2025-04-25 11:30:10,194 - __main__ - INFO - Epoch 045, Train Loss: 1952.0776, Valid Loss: 1783.6151
+2025-04-25 11:30:10,202 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch45_ValLoss:1783.6151.pth
+2025-04-25 11:31:05,246 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:31:08,894 - __main__ - INFO - [Val] Loss: 1776.9304, MAE: 17.9068, MAPE: 68.2115, RMSE: 40.3208
+2025-04-25 11:31:08,895 - __main__ - INFO - Epoch 046, Train Loss: 1944.8927, Valid Loss: 1776.9304
+2025-04-25 11:31:08,902 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch46_ValLoss:1776.9304.pth
+2025-04-25 11:32:04,468 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:32:08,132 - __main__ - INFO - [Val] Loss: 1775.5671, MAE: 17.8968, MAPE: 68.6296, RMSE: 40.3188
+2025-04-25 11:32:08,133 - __main__ - INFO - Epoch 047, Train Loss: 1940.3507, Valid Loss: 1775.5671
+2025-04-25 11:32:08,142 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch47_ValLoss:1775.5671.pth
+2025-04-25 11:33:03,302 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:33:06,885 - __main__ - INFO - [Val] Loss: 1766.1753, MAE: 17.8131, MAPE: 67.3941, RMSE: 40.1782
+2025-04-25 11:33:06,885 - __main__ - INFO - Epoch 048, Train Loss: 1932.2033, Valid Loss: 1766.1753
+2025-04-25 11:33:06,893 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch48_ValLoss:1766.1753.pth
+2025-04-25 11:34:02,083 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:34:05,755 - __main__ - INFO - [Val] Loss: 1774.6110, MAE: 17.9248, MAPE: 67.9589, RMSE: 40.2772
+2025-04-25 11:34:05,755 - __main__ - INFO - Epoch 049, Train Loss: 1926.6056, Valid Loss: 1774.6110
+2025-04-25 11:34:05,755 - __main__ - INFO - No improvement (1/10)
+2025-04-25 11:35:00,911 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:35:04,552 - __main__ - INFO - [Val] Loss: 1771.5868, MAE: 17.9050, MAPE: 67.5487, RMSE: 40.2432
+2025-04-25 11:35:04,553 - __main__ - INFO - Epoch 050, Train Loss: 1933.3024, Valid Loss: 1771.5868
+2025-04-25 11:35:04,553 - __main__ - INFO - No improvement (2/10)
+2025-04-25 11:35:59,755 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:36:03,396 - __main__ - INFO - [Val] Loss: 1756.5184, MAE: 17.8000, MAPE: 66.6007, RMSE: 40.0738
+2025-04-25 11:36:03,396 - __main__ - INFO - Epoch 051, Train Loss: 1921.9159, Valid Loss: 1756.5184
+2025-04-25 11:36:03,405 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch51_ValLoss:1756.5184.pth
+2025-04-25 11:36:59,178 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:37:02,868 - __main__ - INFO - [Val] Loss: 1751.4458, MAE: 17.7749, MAPE: 66.6955, RMSE: 40.0456
+2025-04-25 11:37:02,868 - __main__ - INFO - Epoch 052, Train Loss: 1912.7630, Valid Loss: 1751.4458
+2025-04-25 11:37:02,875 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch52_ValLoss:1751.4458.pth
+2025-04-25 11:37:59,482 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:38:03,187 - __main__ - INFO - [Val] Loss: 1752.2328, MAE: 17.7576, MAPE: 66.3281, RMSE: 40.0035
+2025-04-25 11:38:03,187 - __main__ - INFO - Epoch 053, Train Loss: 1904.4437, Valid Loss: 1752.2328
+2025-04-25 11:38:03,187 - __main__ - INFO - No improvement (1/10)
+2025-04-25 11:38:59,331 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:39:03,021 - __main__ - INFO - [Val] Loss: 1737.4846, MAE: 17.6806, MAPE: 65.9799, RMSE: 39.8571
+2025-04-25 11:39:03,022 - __main__ - INFO - Epoch 054, Train Loss: 1898.7831, Valid Loss: 1737.4846
+2025-04-25 11:39:03,028 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch54_ValLoss:1737.4846.pth
+2025-04-25 11:39:59,576 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:40:03,241 - __main__ - INFO - [Val] Loss: 1734.1873, MAE: 17.6776, MAPE: 65.8844, RMSE: 39.8148
+2025-04-25 11:40:03,241 - __main__ - INFO - Epoch 055, Train Loss: 1895.0272, Valid Loss: 1734.1873
+2025-04-25 11:40:03,249 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch55_ValLoss:1734.1873.pth
+2025-04-25 11:40:59,183 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:41:02,888 - __main__ - INFO - [Val] Loss: 1727.7625, MAE: 17.6122, MAPE: 65.4231, RMSE: 39.7465
+2025-04-25 11:41:02,889 - __main__ - INFO - Epoch 056, Train Loss: 1887.1037, Valid Loss: 1727.7625
+2025-04-25 11:41:02,896 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch56_ValLoss:1727.7625.pth
+2025-04-25 11:41:59,645 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:42:03,353 - __main__ - INFO - [Val] Loss: 1728.1526, MAE: 17.6413, MAPE: 65.7776, RMSE: 39.7542
+2025-04-25 11:42:03,353 - __main__ - INFO - Epoch 057, Train Loss: 1881.0561, Valid Loss: 1728.1526
+2025-04-25 11:42:03,354 - __main__ - INFO - No improvement (1/10)
+2025-04-25 11:42:59,956 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:43:03,609 - __main__ - INFO - [Val] Loss: 1722.6708, MAE: 17.5869, MAPE: 65.4758, RMSE: 39.6958
+2025-04-25 11:43:03,610 - __main__ - INFO - Epoch 058, Train Loss: 1876.0620, Valid Loss: 1722.6708
+2025-04-25 11:43:03,617 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch58_ValLoss:1722.6708.pth
+2025-04-25 11:44:00,080 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:44:03,799 - __main__ - INFO - [Val] Loss: 1718.2630, MAE: 17.5738, MAPE: 65.4338, RMSE: 39.6149
+2025-04-25 11:44:03,799 - __main__ - INFO - Epoch 059, Train Loss: 1870.7323, Valid Loss: 1718.2630
+2025-04-25 11:44:03,808 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch59_ValLoss:1718.2630.pth
+2025-04-25 11:45:00,119 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:45:03,810 - __main__ - INFO - [Val] Loss: 1697.2001, MAE: 17.4472, MAPE: 65.1920, RMSE: 39.3946
+2025-04-25 11:45:03,810 - __main__ - INFO - Epoch 060, Train Loss: 1863.8817, Valid Loss: 1697.2001
+2025-04-25 11:45:03,817 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch60_ValLoss:1697.2001.pth
+2025-04-25 11:46:00,271 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:46:03,967 - __main__ - INFO - [Val] Loss: 1711.4723, MAE: 17.5632, MAPE: 65.9693, RMSE: 39.5773
+2025-04-25 11:46:03,967 - __main__ - INFO - Epoch 061, Train Loss: 1854.1867, Valid Loss: 1711.4723
+2025-04-25 11:46:03,967 - __main__ - INFO - No improvement (1/10)
+2025-04-25 11:47:00,269 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:47:03,972 - __main__ - INFO - [Val] Loss: 1698.8108, MAE: 17.4355, MAPE: 64.9783, RMSE: 39.4182
+2025-04-25 11:47:03,973 - __main__ - INFO - Epoch 062, Train Loss: 1857.6473, Valid Loss: 1698.8108
+2025-04-25 11:47:03,973 - __main__ - INFO - No improvement (2/10)
+2025-04-25 11:48:00,581 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:48:04,306 - __main__ - INFO - [Val] Loss: 1700.3668, MAE: 17.4452, MAPE: 65.0545, RMSE: 39.4358
+2025-04-25 11:48:04,307 - __main__ - INFO - Epoch 063, Train Loss: 1853.6881, Valid Loss: 1700.3668
+2025-04-25 11:48:04,307 - __main__ - INFO - No improvement (3/10)
+2025-04-25 11:49:00,538 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:49:04,233 - __main__ - INFO - [Val] Loss: 1682.0037, MAE: 17.3469, MAPE: 64.3748, RMSE: 39.2071
+2025-04-25 11:49:04,233 - __main__ - INFO - Epoch 064, Train Loss: 1842.7789, Valid Loss: 1682.0037
+2025-04-25 11:49:04,241 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch64_ValLoss:1682.0037.pth
+2025-04-25 11:50:00,967 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:50:04,687 - __main__ - INFO - [Val] Loss: 1691.7501, MAE: 17.4163, MAPE: 65.0072, RMSE: 39.3306
+2025-04-25 11:50:04,688 - __main__ - INFO - Epoch 065, Train Loss: 1842.1374, Valid Loss: 1691.7501
+2025-04-25 11:50:04,688 - __main__ - INFO - No improvement (1/10)
+2025-04-25 11:51:01,160 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:51:04,845 - __main__ - INFO - [Val] Loss: 1690.6777, MAE: 17.3786, MAPE: 64.4196, RMSE: 39.3109
+2025-04-25 11:51:04,845 - __main__ - INFO - Epoch 066, Train Loss: 1838.8581, Valid Loss: 1690.6777
+2025-04-25 11:51:04,845 - __main__ - INFO - No improvement (2/10)
+2025-04-25 11:52:01,342 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:52:05,041 - __main__ - INFO - [Val] Loss: 1690.8956, MAE: 17.4297, MAPE: 64.7044, RMSE: 39.2953
+2025-04-25 11:52:05,042 - __main__ - INFO - Epoch 067, Train Loss: 1836.5630, Valid Loss: 1690.8956
+2025-04-25 11:52:05,042 - __main__ - INFO - No improvement (3/10)
+2025-04-25 11:53:01,441 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:53:05,146 - __main__ - INFO - [Val] Loss: 1679.4451, MAE: 17.3704, MAPE: 64.2049, RMSE: 39.1609
+2025-04-25 11:53:05,146 - __main__ - INFO - Epoch 068, Train Loss: 1828.0346, Valid Loss: 1679.4451
+2025-04-25 11:53:05,154 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch68_ValLoss:1679.4451.pth
+2025-04-25 11:54:01,952 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:54:05,669 - __main__ - INFO - [Val] Loss: 1665.6287, MAE: 17.2565, MAPE: 63.9450, RMSE: 38.9902
+2025-04-25 11:54:05,670 - __main__ - INFO - Epoch 069, Train Loss: 1817.3826, Valid Loss: 1665.6287
+2025-04-25 11:54:05,678 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch69_ValLoss:1665.6287.pth
+2025-04-25 11:55:02,023 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:55:05,708 - __main__ - INFO - [Val] Loss: 1655.9512, MAE: 17.2255, MAPE: 63.9374, RMSE: 38.8834
+2025-04-25 11:55:05,708 - __main__ - INFO - Epoch 070, Train Loss: 1804.7118, Valid Loss: 1655.9512
+2025-04-25 11:55:05,716 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch70_ValLoss:1655.9512.pth
+2025-04-25 11:56:02,368 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:56:06,058 - __main__ - INFO - [Val] Loss: 1650.5524, MAE: 17.2060, MAPE: 63.3855, RMSE: 38.8354
+2025-04-25 11:56:06,058 - __main__ - INFO - Epoch 071, Train Loss: 1795.1899, Valid Loss: 1650.5524
+2025-04-25 11:56:06,067 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch71_ValLoss:1650.5524.pth
+2025-04-25 11:57:02,469 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:57:06,090 - __main__ - INFO - [Val] Loss: 1640.6775, MAE: 17.1291, MAPE: 62.6364, RMSE: 38.7367
+2025-04-25 11:57:06,091 - __main__ - INFO - Epoch 072, Train Loss: 1785.0552, Valid Loss: 1640.6775
+2025-04-25 11:57:06,098 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch72_ValLoss:1640.6775.pth
+2025-04-25 11:58:02,922 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:58:06,637 - __main__ - INFO - [Val] Loss: 1631.5852, MAE: 17.0260, MAPE: 62.6729, RMSE: 38.5760
+2025-04-25 11:58:06,638 - __main__ - INFO - Epoch 073, Train Loss: 1780.0900, Valid Loss: 1631.5852
+2025-04-25 11:58:06,647 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch73_ValLoss:1631.5852.pth
+2025-04-25 11:59:03,147 - __main__ - INFO - Start validation phase.....
+2025-04-25 11:59:06,838 - __main__ - INFO - [Val] Loss: 1614.1512, MAE: 16.9066, MAPE: 61.6542, RMSE: 38.3763
+2025-04-25 11:59:06,838 - __main__ - INFO - Epoch 074, Train Loss: 1773.1022, Valid Loss: 1614.1512
+2025-04-25 11:59:06,846 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch74_ValLoss:1614.1512.pth
+2025-04-25 12:00:03,546 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:00:07,224 - __main__ - INFO - [Val] Loss: 1620.6976, MAE: 16.9947, MAPE: 62.2951, RMSE: 38.4566
+2025-04-25 12:00:07,225 - __main__ - INFO - Epoch 075, Train Loss: 1765.8553, Valid Loss: 1620.6976
+2025-04-25 12:00:07,225 - __main__ - INFO - No improvement (1/10)
+2025-04-25 12:01:03,819 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:01:07,510 - __main__ - INFO - [Val] Loss: 1613.1409, MAE: 16.9525, MAPE: 61.8894, RMSE: 38.3679
+2025-04-25 12:01:07,510 - __main__ - INFO - Epoch 076, Train Loss: 1760.2898, Valid Loss: 1613.1409
+2025-04-25 12:01:07,517 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch76_ValLoss:1613.1409.pth
+2025-04-25 12:02:04,647 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:02:08,349 - __main__ - INFO - [Val] Loss: 1597.4172, MAE: 16.8878, MAPE: 61.4273, RMSE: 38.1879
+2025-04-25 12:02:08,349 - __main__ - INFO - Epoch 077, Train Loss: 1754.5721, Valid Loss: 1597.4172
+2025-04-25 12:02:08,359 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch77_ValLoss:1597.4172.pth
+2025-04-25 12:03:04,923 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:03:08,609 - __main__ - INFO - [Val] Loss: 1604.2869, MAE: 16.9120, MAPE: 61.4061, RMSE: 38.2356
+2025-04-25 12:03:08,610 - __main__ - INFO - Epoch 078, Train Loss: 1754.8208, Valid Loss: 1604.2869
+2025-04-25 12:03:08,610 - __main__ - INFO - No improvement (1/10)
+2025-04-25 12:04:05,284 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:04:08,993 - __main__ - INFO - [Val] Loss: 1600.8767, MAE: 16.9123, MAPE: 61.6425, RMSE: 38.2286
+2025-04-25 12:04:08,994 - __main__ - INFO - Epoch 079, Train Loss: 1748.5043, Valid Loss: 1600.8767
+2025-04-25 12:04:08,994 - __main__ - INFO - No improvement (2/10)
+2025-04-25 12:05:05,427 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:05:09,112 - __main__ - INFO - [Val] Loss: 1600.3485, MAE: 16.9805, MAPE: 60.3325, RMSE: 38.2190
+2025-04-25 12:05:09,113 - __main__ - INFO - Epoch 080, Train Loss: 1746.6142, Valid Loss: 1600.3485
+2025-04-25 12:05:09,113 - __main__ - INFO - No improvement (3/10)
+2025-04-25 12:06:05,631 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:06:09,316 - __main__ - INFO - [Val] Loss: 1603.9012, MAE: 16.9072, MAPE: 60.4622, RMSE: 38.2562
+2025-04-25 12:06:09,316 - __main__ - INFO - Epoch 081, Train Loss: 1750.5691, Valid Loss: 1603.9012
+2025-04-25 12:06:09,316 - __main__ - INFO - No improvement (4/10)
+2025-04-25 12:07:05,776 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:07:09,489 - __main__ - INFO - [Val] Loss: 1587.7275, MAE: 16.8343, MAPE: 60.3364, RMSE: 38.0616
+2025-04-25 12:07:09,489 - __main__ - INFO - Epoch 082, Train Loss: 1745.4838, Valid Loss: 1587.7275
+2025-04-25 12:07:09,496 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch82_ValLoss:1587.7275.pth
+2025-04-25 12:08:06,144 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:08:09,859 - __main__ - INFO - [Val] Loss: 1615.6567, MAE: 17.1125, MAPE: 61.9374, RMSE: 38.4046
+2025-04-25 12:08:09,859 - __main__ - INFO - Epoch 083, Train Loss: 1761.2642, Valid Loss: 1615.6567
+2025-04-25 12:08:09,859 - __main__ - INFO - No improvement (1/10)
+2025-04-25 12:09:06,306 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:09:09,941 - __main__ - INFO - [Val] Loss: 1612.1873, MAE: 17.0953, MAPE: 62.2946, RMSE: 38.4000
+2025-04-25 12:09:09,941 - __main__ - INFO - Epoch 084, Train Loss: 1762.5308, Valid Loss: 1612.1873
+2025-04-25 12:09:09,942 - __main__ - INFO - No improvement (2/10)
+2025-04-25 12:10:06,391 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:10:10,085 - __main__ - INFO - [Val] Loss: 1609.5260, MAE: 16.9642, MAPE: 62.0727, RMSE: 38.3528
+2025-04-25 12:10:10,086 - __main__ - INFO - Epoch 085, Train Loss: 1755.2869, Valid Loss: 1609.5260
+2025-04-25 12:10:10,086 - __main__ - INFO - No improvement (3/10)
+2025-04-25 12:11:06,399 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:11:10,015 - __main__ - INFO - [Val] Loss: 1605.8816, MAE: 16.9508, MAPE: 62.1804, RMSE: 38.2947
+2025-04-25 12:11:10,016 - __main__ - INFO - Epoch 086, Train Loss: 1746.5008, Valid Loss: 1605.8816
+2025-04-25 12:11:10,016 - __main__ - INFO - No improvement (4/10)
+2025-04-25 12:12:06,572 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:12:10,274 - __main__ - INFO - [Val] Loss: 1605.4396, MAE: 16.9376, MAPE: 62.1652, RMSE: 38.2852
+2025-04-25 12:12:10,274 - __main__ - INFO - Epoch 087, Train Loss: 1743.7823, Valid Loss: 1605.4396
+2025-04-25 12:12:10,274 - __main__ - INFO - No improvement (5/10)
+2025-04-25 12:13:06,510 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:13:10,129 - __main__ - INFO - [Val] Loss: 1582.8016, MAE: 16.8493, MAPE: 61.5457, RMSE: 38.0007
+2025-04-25 12:13:10,129 - __main__ - INFO - Epoch 088, Train Loss: 1743.0021, Valid Loss: 1582.8016
+2025-04-25 12:13:10,136 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch88_ValLoss:1582.8016.pth
+2025-04-25 12:14:06,742 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:14:10,457 - __main__ - INFO - [Val] Loss: 1586.4502, MAE: 16.8000, MAPE: 61.4215, RMSE: 38.0535
+2025-04-25 12:14:10,457 - __main__ - INFO - Epoch 089, Train Loss: 1739.1785, Valid Loss: 1586.4502
+2025-04-25 12:14:10,457 - __main__ - INFO - No improvement (1/10)
+2025-04-25 12:15:07,106 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:15:10,775 - __main__ - INFO - [Val] Loss: 1596.5808, MAE: 16.9342, MAPE: 62.2601, RMSE: 38.1922
+2025-04-25 12:15:10,775 - __main__ - INFO - Epoch 090, Train Loss: 1739.7855, Valid Loss: 1596.5808
+2025-04-25 12:15:10,775 - __main__ - INFO - No improvement (2/10)
+2025-04-25 12:16:07,522 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:16:11,196 - __main__ - INFO - [Val] Loss: 1602.8432, MAE: 16.9633, MAPE: 62.4937, RMSE: 38.2699
+2025-04-25 12:16:11,197 - __main__ - INFO - Epoch 091, Train Loss: 1739.0385, Valid Loss: 1602.8432
+2025-04-25 12:16:11,197 - __main__ - INFO - No improvement (3/10)
+2025-04-25 12:17:07,624 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:17:11,317 - __main__ - INFO - [Val] Loss: 1610.9474, MAE: 16.9764, MAPE: 62.4573, RMSE: 38.3729
+2025-04-25 12:17:11,318 - __main__ - INFO - Epoch 092, Train Loss: 1749.7710, Valid Loss: 1610.9474
+2025-04-25 12:17:11,318 - __main__ - INFO - No improvement (4/10)
+2025-04-25 12:18:08,029 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:18:11,731 - __main__ - INFO - [Val] Loss: 1604.9571, MAE: 17.0309, MAPE: 62.3584, RMSE: 38.3160
+2025-04-25 12:18:11,732 - __main__ - INFO - Epoch 093, Train Loss: 1747.6331, Valid Loss: 1604.9571
+2025-04-25 12:18:11,732 - __main__ - INFO - No improvement (5/10)
+2025-04-25 12:19:08,130 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:19:11,819 - __main__ - INFO - [Val] Loss: 1588.7289, MAE: 16.8917, MAPE: 62.0122, RMSE: 38.1058
+2025-04-25 12:19:11,820 - __main__ - INFO - Epoch 094, Train Loss: 1752.5358, Valid Loss: 1588.7289
+2025-04-25 12:19:11,820 - __main__ - INFO - No improvement (6/10)
+2025-04-25 12:20:08,570 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:20:12,277 - __main__ - INFO - [Val] Loss: 1581.5723, MAE: 16.8629, MAPE: 62.0314, RMSE: 38.0137
+2025-04-25 12:20:12,277 - __main__ - INFO - Epoch 095, Train Loss: 1726.1993, Valid Loss: 1581.5723
+2025-04-25 12:20:12,286 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch95_ValLoss:1581.5723.pth
+2025-04-25 12:21:08,440 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:21:12,126 - __main__ - INFO - [Val] Loss: 1576.5633, MAE: 16.7909, MAPE: 61.3967, RMSE: 37.9480
+2025-04-25 12:21:12,127 - __main__ - INFO - Epoch 096, Train Loss: 1722.0930, Valid Loss: 1576.5633
+2025-04-25 12:21:12,133 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch96_ValLoss:1576.5633.pth
+2025-04-25 12:22:09,059 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:22:12,959 - __main__ - INFO - [Val] Loss: 1573.2238, MAE: 16.7982, MAPE: 61.7752, RMSE: 37.8931
+2025-04-25 12:22:12,959 - __main__ - INFO - Epoch 097, Train Loss: 1722.8397, Valid Loss: 1573.2238
+2025-04-25 12:22:12,968 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch97_ValLoss:1573.2238.pth
+2025-04-25 12:23:09,327 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:23:13,040 - __main__ - INFO - [Val] Loss: 1567.7236, MAE: 16.8303, MAPE: 61.7176, RMSE: 37.8450
+2025-04-25 12:23:13,041 - __main__ - INFO - Epoch 098, Train Loss: 1720.8632, Valid Loss: 1567.7236
+2025-04-25 12:23:13,047 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch98_ValLoss:1567.7236.pth
+2025-04-25 12:24:09,730 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:24:13,454 - __main__ - INFO - [Val] Loss: 1556.3666, MAE: 16.7844, MAPE: 61.5865, RMSE: 37.7259
+2025-04-25 12:24:13,454 - __main__ - INFO - Epoch 099, Train Loss: 1718.2760, Valid Loss: 1556.3666
+2025-04-25 12:24:13,462 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch99_ValLoss:1556.3666.pth
+2025-04-25 12:25:10,050 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:25:13,692 - __main__ - INFO - [Val] Loss: 1558.3634, MAE: 16.8399, MAPE: 62.0043, RMSE: 37.7653
+2025-04-25 12:25:13,692 - __main__ - INFO - Epoch 100, Train Loss: 1712.8278, Valid Loss: 1558.3634
+2025-04-25 12:25:13,692 - __main__ - INFO - No improvement (1/10)
+2025-04-25 12:26:10,518 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:26:14,191 - __main__ - INFO - [Val] Loss: 1568.3850, MAE: 16.8722, MAPE: 62.4791, RMSE: 37.8643
+2025-04-25 12:26:14,191 - __main__ - INFO - Epoch 101, Train Loss: 1708.0841, Valid Loss: 1568.3850
+2025-04-25 12:26:14,191 - __main__ - INFO - No improvement (2/10)
+2025-04-25 12:27:10,488 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:27:14,103 - __main__ - INFO - [Val] Loss: 1564.8943, MAE: 16.8269, MAPE: 61.9613, RMSE: 37.8126
+2025-04-25 12:27:14,103 - __main__ - INFO - Epoch 102, Train Loss: 1712.7287, Valid Loss: 1564.8943
+2025-04-25 12:27:14,104 - __main__ - INFO - No improvement (3/10)
+2025-04-25 12:28:10,730 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:28:14,445 - __main__ - INFO - [Val] Loss: 1550.0884, MAE: 16.6869, MAPE: 61.7670, RMSE: 37.6026
+2025-04-25 12:28:14,446 - __main__ - INFO - Epoch 103, Train Loss: 1687.0798, Valid Loss: 1550.0884
+2025-04-25 12:28:14,455 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch103_ValLoss:1550.0884.pth
+2025-04-25 12:29:10,864 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:29:14,491 - __main__ - INFO - [Val] Loss: 1521.6683, MAE: 16.5245, MAPE: 60.5699, RMSE: 37.2889
+2025-04-25 12:29:14,492 - __main__ - INFO - Epoch 104, Train Loss: 1680.3630, Valid Loss: 1521.6683
+2025-04-25 12:29:14,499 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch104_ValLoss:1521.6683.pth
+2025-04-25 12:30:11,211 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:30:14,887 - __main__ - INFO - [Val] Loss: 1527.7246, MAE: 16.5953, MAPE: 60.4716, RMSE: 37.3363
+2025-04-25 12:30:14,888 - __main__ - INFO - Epoch 105, Train Loss: 1669.5904, Valid Loss: 1527.7246
+2025-04-25 12:30:14,888 - __main__ - INFO - No improvement (1/10)
+2025-04-25 12:31:11,163 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:31:14,845 - __main__ - INFO - [Val] Loss: 1511.5280, MAE: 16.5101, MAPE: 60.1385, RMSE: 37.1251
+2025-04-25 12:31:14,846 - __main__ - INFO - Epoch 106, Train Loss: 1664.1322, Valid Loss: 1511.5280
+2025-04-25 12:31:14,853 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch106_ValLoss:1511.5280.pth
+2025-04-25 12:32:11,569 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:32:15,270 - __main__ - INFO - [Val] Loss: 1513.5257, MAE: 16.5588, MAPE: 60.4329, RMSE: 37.1203
+2025-04-25 12:32:15,270 - __main__ - INFO - Epoch 107, Train Loss: 1664.2971, Valid Loss: 1513.5257
+2025-04-25 12:32:15,270 - __main__ - INFO - No improvement (1/10)
+2025-04-25 12:33:11,512 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:33:15,126 - __main__ - INFO - [Val] Loss: 1516.8705, MAE: 16.5694, MAPE: 60.4449, RMSE: 37.2100
+2025-04-25 12:33:15,127 - __main__ - INFO - Epoch 108, Train Loss: 1658.4165, Valid Loss: 1516.8705
+2025-04-25 12:33:15,127 - __main__ - INFO - No improvement (2/10)
+2025-04-25 12:34:11,722 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:34:15,418 - __main__ - INFO - [Val] Loss: 1511.3997, MAE: 16.4955, MAPE: 60.2624, RMSE: 37.1378
+2025-04-25 12:34:15,418 - __main__ - INFO - Epoch 109, Train Loss: 1651.7952, Valid Loss: 1511.3997
+2025-04-25 12:34:15,427 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch109_ValLoss:1511.3997.pth
+2025-04-25 12:35:11,925 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:35:15,559 - __main__ - INFO - [Val] Loss: 1500.4855, MAE: 16.4007, MAPE: 60.4864, RMSE: 37.0316
+2025-04-25 12:35:15,560 - __main__ - INFO - Epoch 110, Train Loss: 1648.9846, Valid Loss: 1500.4855
+2025-04-25 12:35:15,566 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch110_ValLoss:1500.4855.pth
+2025-04-25 12:36:12,010 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:36:15,711 - __main__ - INFO - [Val] Loss: 1494.6822, MAE: 16.3837, MAPE: 60.0972, RMSE: 36.9255
+2025-04-25 12:36:15,712 - __main__ - INFO - Epoch 111, Train Loss: 1637.9807, Valid Loss: 1494.6822
+2025-04-25 12:36:15,720 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch111_ValLoss:1494.6822.pth
+2025-04-25 12:37:11,939 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:37:15,645 - __main__ - INFO - [Val] Loss: 1503.2626, MAE: 16.4605, MAPE: 59.8223, RMSE: 37.0378
+2025-04-25 12:37:15,645 - __main__ - INFO - Epoch 112, Train Loss: 1641.1046, Valid Loss: 1503.2626
+2025-04-25 12:37:15,645 - __main__ - INFO - No improvement (1/10)
+2025-04-25 12:38:12,302 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:38:15,997 - __main__ - INFO - [Val] Loss: 1495.6991, MAE: 16.4837, MAPE: 60.2773, RMSE: 36.9397
+2025-04-25 12:38:15,998 - __main__ - INFO - Epoch 113, Train Loss: 1635.7366, Valid Loss: 1495.6991
+2025-04-25 12:38:15,998 - __main__ - INFO - No improvement (2/10)
+2025-04-25 12:39:12,625 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:39:16,310 - __main__ - INFO - [Val] Loss: 1494.7767, MAE: 16.4528, MAPE: 60.1058, RMSE: 37.0082
+2025-04-25 12:39:16,311 - __main__ - INFO - Epoch 114, Train Loss: 1628.3937, Valid Loss: 1494.7767
+2025-04-25 12:39:16,311 - __main__ - INFO - No improvement (3/10)
+2025-04-25 12:40:12,969 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:40:16,703 - __main__ - INFO - [Val] Loss: 1491.4348, MAE: 16.3769, MAPE: 59.9804, RMSE: 36.8868
+2025-04-25 12:40:16,703 - __main__ - INFO - Epoch 115, Train Loss: 1631.1723, Valid Loss: 1491.4348
+2025-04-25 12:40:16,711 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch115_ValLoss:1491.4348.pth
+2025-04-25 12:41:12,988 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:41:16,668 - __main__ - INFO - [Val] Loss: 1487.8406, MAE: 16.3833, MAPE: 59.7854, RMSE: 36.8606
+2025-04-25 12:41:16,668 - __main__ - INFO - Epoch 116, Train Loss: 1631.6147, Valid Loss: 1487.8406
+2025-04-25 12:41:16,676 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch116_ValLoss:1487.8406.pth
+2025-04-25 12:42:13,329 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:42:17,022 - __main__ - INFO - [Val] Loss: 1467.0852, MAE: 16.2704, MAPE: 58.8345, RMSE: 36.6028
+2025-04-25 12:42:17,023 - __main__ - INFO - Epoch 117, Train Loss: 1631.5168, Valid Loss: 1467.0852
+2025-04-25 12:42:17,031 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch117_ValLoss:1467.0852.pth
+2025-04-25 12:43:13,192 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:43:16,806 - __main__ - INFO - [Val] Loss: 1485.0983, MAE: 16.4395, MAPE: 59.8329, RMSE: 36.8671
+2025-04-25 12:43:16,807 - __main__ - INFO - Epoch 118, Train Loss: 1627.8838, Valid Loss: 1485.0983
+2025-04-25 12:43:16,807 - __main__ - INFO - No improvement (1/10)
+2025-04-25 12:44:13,445 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:44:17,144 - __main__ - INFO - [Val] Loss: 1469.7705, MAE: 16.3095, MAPE: 59.0943, RMSE: 36.6297
+2025-04-25 12:44:17,145 - __main__ - INFO - Epoch 119, Train Loss: 1623.9539, Valid Loss: 1469.7705
+2025-04-25 12:44:17,145 - __main__ - INFO - No improvement (2/10)
+2025-04-25 12:45:13,371 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:45:16,997 - __main__ - INFO - [Val] Loss: 1473.1575, MAE: 16.3436, MAPE: 59.4311, RMSE: 36.6646
+2025-04-25 12:45:16,997 - __main__ - INFO - Epoch 120, Train Loss: 1615.6250, Valid Loss: 1473.1575
+2025-04-25 12:45:16,997 - __main__ - INFO - No improvement (3/10)
+2025-04-25 12:46:13,738 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:46:17,479 - __main__ - INFO - [Val] Loss: 1466.9048, MAE: 16.4085, MAPE: 58.5940, RMSE: 36.5914
+2025-04-25 12:46:17,479 - __main__ - INFO - Epoch 121, Train Loss: 1615.0815, Valid Loss: 1466.9048
+2025-04-25 12:46:17,487 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch121_ValLoss:1466.9048.pth
+2025-04-25 12:47:14,007 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:47:17,609 - __main__ - INFO - [Val] Loss: 1458.7651, MAE: 16.3147, MAPE: 58.8711, RMSE: 36.4939
+2025-04-25 12:47:17,610 - __main__ - INFO - Epoch 122, Train Loss: 1606.9898, Valid Loss: 1458.7651
+2025-04-25 12:47:17,616 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch122_ValLoss:1458.7651.pth
+2025-04-25 12:48:14,417 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:48:18,124 - __main__ - INFO - [Val] Loss: 1459.0703, MAE: 16.2643, MAPE: 58.9196, RMSE: 36.4721
+2025-04-25 12:48:18,125 - __main__ - INFO - Epoch 123, Train Loss: 1604.2189, Valid Loss: 1459.0703
+2025-04-25 12:48:18,125 - __main__ - INFO - No improvement (1/10)
+2025-04-25 12:49:14,866 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:49:18,647 - __main__ - INFO - [Val] Loss: 1455.6340, MAE: 16.3203, MAPE: 59.0618, RMSE: 36.4921
+2025-04-25 12:49:18,647 - __main__ - INFO - Epoch 124, Train Loss: 1599.9816, Valid Loss: 1455.6340
+2025-04-25 12:49:18,655 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch124_ValLoss:1455.6340.pth
+2025-04-25 12:50:16,401 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:50:20,303 - __main__ - INFO - [Val] Loss: 1449.1832, MAE: 16.3091, MAPE: 59.5560, RMSE: 36.3947
+2025-04-25 12:50:20,303 - __main__ - INFO - Epoch 125, Train Loss: 1589.7210, Valid Loss: 1449.1832
+2025-04-25 12:50:20,312 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch125_ValLoss:1449.1832.pth
+2025-04-25 12:51:16,234 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:51:20,022 - __main__ - INFO - [Val] Loss: 1453.9533, MAE: 16.3405, MAPE: 59.6590, RMSE: 36.4789
+2025-04-25 12:51:20,022 - __main__ - INFO - Epoch 126, Train Loss: 1584.1917, Valid Loss: 1453.9533
+2025-04-25 12:51:20,022 - __main__ - INFO - No improvement (1/10)
+2025-04-25 12:52:16,335 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:52:20,192 - __main__ - INFO - [Val] Loss: 1444.0406, MAE: 16.2661, MAPE: 59.1883, RMSE: 36.3354
+2025-04-25 12:52:20,192 - __main__ - INFO - Epoch 127, Train Loss: 1583.5595, Valid Loss: 1444.0406
+2025-04-25 12:52:20,201 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch127_ValLoss:1444.0406.pth
+2025-04-25 12:53:16,673 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:53:20,291 - __main__ - INFO - [Val] Loss: 1438.3741, MAE: 16.1449, MAPE: 59.2613, RMSE: 36.2465
+2025-04-25 12:53:20,292 - __main__ - INFO - Epoch 128, Train Loss: 1583.6747, Valid Loss: 1438.3741
+2025-04-25 12:53:20,299 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch128_ValLoss:1438.3741.pth
+2025-04-25 12:54:16,845 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:54:20,560 - __main__ - INFO - [Val] Loss: 1439.9682, MAE: 16.1857, MAPE: 59.6474, RMSE: 36.2807
+2025-04-25 12:54:20,560 - __main__ - INFO - Epoch 129, Train Loss: 1583.2223, Valid Loss: 1439.9682
+2025-04-25 12:54:20,560 - __main__ - INFO - No improvement (1/10)
+2025-04-25 12:55:16,773 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:55:20,483 - __main__ - INFO - [Val] Loss: 1443.2259, MAE: 16.1887, MAPE: 59.3763, RMSE: 36.3045
+2025-04-25 12:55:20,483 - __main__ - INFO - Epoch 130, Train Loss: 1578.9466, Valid Loss: 1443.2259
+2025-04-25 12:55:20,483 - __main__ - INFO - No improvement (2/10)
+2025-04-25 12:56:16,949 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:56:20,650 - __main__ - INFO - [Val] Loss: 1424.3095, MAE: 16.1099, MAPE: 58.7261, RMSE: 36.0546
+2025-04-25 12:56:20,651 - __main__ - INFO - Epoch 131, Train Loss: 1572.7832, Valid Loss: 1424.3095
+2025-04-25 12:56:20,660 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch131_ValLoss:1424.3095.pth
+2025-04-25 12:57:17,440 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:57:21,134 - __main__ - INFO - [Val] Loss: 1433.6649, MAE: 16.2405, MAPE: 59.7868, RMSE: 36.2047
+2025-04-25 12:57:21,135 - __main__ - INFO - Epoch 132, Train Loss: 1574.9853, Valid Loss: 1433.6649
+2025-04-25 12:57:21,135 - __main__ - INFO - No improvement (1/10)
+2025-04-25 12:58:17,887 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:58:21,597 - __main__ - INFO - [Val] Loss: 1428.8935, MAE: 16.1144, MAPE: 59.7355, RMSE: 36.1387
+2025-04-25 12:58:21,597 - __main__ - INFO - Epoch 133, Train Loss: 1564.1702, Valid Loss: 1428.8935
+2025-04-25 12:58:21,597 - __main__ - INFO - No improvement (2/10)
+2025-04-25 12:59:17,938 - __main__ - INFO - Start validation phase.....
+2025-04-25 12:59:21,602 - __main__ - INFO - [Val] Loss: 1429.5057, MAE: 16.1222, MAPE: 58.9470, RMSE: 36.1549
+2025-04-25 12:59:21,603 - __main__ - INFO - Epoch 134, Train Loss: 1564.8872, Valid Loss: 1429.5057
+2025-04-25 12:59:21,603 - __main__ - INFO - No improvement (3/10)
+2025-04-25 13:00:18,035 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:00:21,746 - __main__ - INFO - [Val] Loss: 1411.1498, MAE: 16.0056, MAPE: 58.3277, RMSE: 35.8766
+2025-04-25 13:00:21,746 - __main__ - INFO - Epoch 135, Train Loss: 1563.5998, Valid Loss: 1411.1498
+2025-04-25 13:00:21,754 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch135_ValLoss:1411.1498.pth
+2025-04-25 13:01:18,385 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:01:22,068 - __main__ - INFO - [Val] Loss: 1424.1319, MAE: 16.0643, MAPE: 59.4452, RMSE: 36.1099
+2025-04-25 13:01:22,068 - __main__ - INFO - Epoch 136, Train Loss: 1561.9373, Valid Loss: 1424.1319
+2025-04-25 13:01:22,069 - __main__ - INFO - No improvement (1/10)
+2025-04-25 13:02:18,661 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:02:22,318 - __main__ - INFO - [Val] Loss: 1419.3050, MAE: 16.0987, MAPE: 58.6241, RMSE: 36.0250
+2025-04-25 13:02:22,319 - __main__ - INFO - Epoch 137, Train Loss: 1563.2039, Valid Loss: 1419.3050
+2025-04-25 13:02:22,319 - __main__ - INFO - No improvement (2/10)
+2025-04-25 13:03:18,194 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:03:21,888 - __main__ - INFO - [Val] Loss: 1424.2828, MAE: 16.1230, MAPE: 59.1106, RMSE: 36.0877
+2025-04-25 13:03:21,888 - __main__ - INFO - Epoch 138, Train Loss: 1561.9155, Valid Loss: 1424.2828
+2025-04-25 13:03:21,888 - __main__ - INFO - No improvement (3/10)
+2025-04-25 13:04:18,234 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:04:21,925 - __main__ - INFO - [Val] Loss: 1421.9365, MAE: 16.1429, MAPE: 59.5313, RMSE: 36.0701
+2025-04-25 13:04:21,926 - __main__ - INFO - Epoch 139, Train Loss: 1556.8095, Valid Loss: 1421.9365
+2025-04-25 13:04:21,926 - __main__ - INFO - No improvement (4/10)
+2025-04-25 13:05:18,312 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:05:21,968 - __main__ - INFO - [Val] Loss: 1426.7381, MAE: 16.1854, MAPE: 59.4778, RMSE: 36.1513
+2025-04-25 13:05:21,968 - __main__ - INFO - Epoch 140, Train Loss: 1559.1949, Valid Loss: 1426.7381
+2025-04-25 13:05:21,968 - __main__ - INFO - No improvement (5/10)
+2025-04-25 13:06:18,520 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:06:22,237 - __main__ - INFO - [Val] Loss: 1422.3830, MAE: 16.1880, MAPE: 59.3404, RMSE: 36.0855
+2025-04-25 13:06:22,237 - __main__ - INFO - Epoch 141, Train Loss: 1561.3913, Valid Loss: 1422.3830
+2025-04-25 13:06:22,237 - __main__ - INFO - No improvement (6/10)
+2025-04-25 13:07:18,635 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:07:22,319 - __main__ - INFO - [Val] Loss: 1415.9257, MAE: 16.2080, MAPE: 59.2022, RMSE: 36.0263
+2025-04-25 13:07:22,320 - __main__ - INFO - Epoch 142, Train Loss: 1557.0558, Valid Loss: 1415.9257
+2025-04-25 13:07:22,320 - __main__ - INFO - No improvement (7/10)
+2025-04-25 13:08:18,974 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:08:22,672 - __main__ - INFO - [Val] Loss: 1407.7724, MAE: 16.1014, MAPE: 58.3098, RMSE: 35.8672
+2025-04-25 13:08:22,673 - __main__ - INFO - Epoch 143, Train Loss: 1556.2085, Valid Loss: 1407.7724
+2025-04-25 13:08:22,683 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch143_ValLoss:1407.7724.pth
+2025-04-25 13:09:19,120 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:09:22,807 - __main__ - INFO - [Val] Loss: 1415.9369, MAE: 16.1499, MAPE: 59.0353, RMSE: 35.9935
+2025-04-25 13:09:22,808 - __main__ - INFO - Epoch 144, Train Loss: 1547.8096, Valid Loss: 1415.9369
+2025-04-25 13:09:22,808 - __main__ - INFO - No improvement (1/10)
+2025-04-25 13:10:19,344 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:10:23,021 - __main__ - INFO - [Val] Loss: 1406.6061, MAE: 16.1092, MAPE: 59.2983, RMSE: 35.8978
+2025-04-25 13:10:23,021 - __main__ - INFO - Epoch 145, Train Loss: 1548.0995, Valid Loss: 1406.6061
+2025-04-25 13:10:23,030 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch145_ValLoss:1406.6061.pth
+2025-04-25 13:11:19,353 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:11:23,030 - __main__ - INFO - [Val] Loss: 1404.2312, MAE: 16.0666, MAPE: 59.5893, RMSE: 35.8860
+2025-04-25 13:11:23,030 - __main__ - INFO - Epoch 146, Train Loss: 1548.1689, Valid Loss: 1404.2312
+2025-04-25 13:11:23,038 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch146_ValLoss:1404.2312.pth
+2025-04-25 13:12:19,779 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:12:23,471 - __main__ - INFO - [Val] Loss: 1406.5044, MAE: 16.1096, MAPE: 59.5741, RMSE: 35.9143
+2025-04-25 13:12:23,471 - __main__ - INFO - Epoch 147, Train Loss: 1545.0596, Valid Loss: 1406.5044
+2025-04-25 13:12:23,471 - __main__ - INFO - No improvement (1/10)
+2025-04-25 13:13:19,812 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:13:23,429 - __main__ - INFO - [Val] Loss: 1398.2040, MAE: 15.9879, MAPE: 59.0753, RMSE: 35.7270
+2025-04-25 13:13:23,430 - __main__ - INFO - Epoch 148, Train Loss: 1535.5317, Valid Loss: 1398.2040
+2025-04-25 13:13:23,437 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch148_ValLoss:1398.2040.pth
+2025-04-25 13:14:19,902 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:14:23,585 - __main__ - INFO - [Val] Loss: 1395.0817, MAE: 15.9372, MAPE: 59.3451, RMSE: 35.6944
+2025-04-25 13:14:23,586 - __main__ - INFO - Epoch 149, Train Loss: 1538.1103, Valid Loss: 1395.0817
+2025-04-25 13:14:23,595 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch149_ValLoss:1395.0817.pth
+2025-04-25 13:15:19,926 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:15:23,580 - __main__ - INFO - [Val] Loss: 1419.6529, MAE: 16.1635, MAPE: 60.4701, RMSE: 36.0332
+2025-04-25 13:15:23,580 - __main__ - INFO - Epoch 150, Train Loss: 1532.1434, Valid Loss: 1419.6529
+2025-04-25 13:15:23,580 - __main__ - INFO - No improvement (1/10)
+2025-04-25 13:16:20,165 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:16:23,907 - __main__ - INFO - [Val] Loss: 1397.9909, MAE: 16.0287, MAPE: 59.8548, RMSE: 35.7553
+2025-04-25 13:16:23,908 - __main__ - INFO - Epoch 151, Train Loss: 1526.1358, Valid Loss: 1397.9909
+2025-04-25 13:16:23,908 - __main__ - INFO - No improvement (2/10)
+2025-04-25 13:17:20,167 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:17:23,853 - __main__ - INFO - [Val] Loss: 1401.8718, MAE: 16.0626, MAPE: 59.8503, RMSE: 35.8672
+2025-04-25 13:17:23,854 - __main__ - INFO - Epoch 152, Train Loss: 1525.7418, Valid Loss: 1401.8718
+2025-04-25 13:17:23,854 - __main__ - INFO - No improvement (3/10)
+2025-04-25 13:18:20,535 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:18:24,238 - __main__ - INFO - [Val] Loss: 1380.8527, MAE: 15.9431, MAPE: 59.1982, RMSE: 35.5699
+2025-04-25 13:18:24,238 - __main__ - INFO - Epoch 153, Train Loss: 1519.6136, Valid Loss: 1380.8527
+2025-04-25 13:18:24,248 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch153_ValLoss:1380.8527.pth
+2025-04-25 13:19:20,607 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:19:24,278 - __main__ - INFO - [Val] Loss: 1385.2770, MAE: 15.9621, MAPE: 59.4095, RMSE: 35.6388
+2025-04-25 13:19:24,279 - __main__ - INFO - Epoch 154, Train Loss: 1517.8910, Valid Loss: 1385.2770
+2025-04-25 13:19:24,279 - __main__ - INFO - No improvement (1/10)
+2025-04-25 13:20:20,982 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:20:24,668 - __main__ - INFO - [Val] Loss: 1395.8541, MAE: 16.0892, MAPE: 60.3103, RMSE: 35.7715
+2025-04-25 13:20:24,668 - __main__ - INFO - Epoch 155, Train Loss: 1519.2353, Valid Loss: 1395.8541
+2025-04-25 13:20:24,668 - __main__ - INFO - No improvement (2/10)
+2025-04-25 13:21:21,148 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:21:24,834 - __main__ - INFO - [Val] Loss: 1373.0351, MAE: 15.8448, MAPE: 58.1358, RMSE: 35.4237
+2025-04-25 13:21:24,834 - __main__ - INFO - Epoch 156, Train Loss: 1514.4875, Valid Loss: 1373.0351
+2025-04-25 13:21:24,842 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch156_ValLoss:1373.0351.pth
+2025-04-25 13:22:21,574 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:22:25,265 - __main__ - INFO - [Val] Loss: 1378.2639, MAE: 15.9353, MAPE: 59.0179, RMSE: 35.5534
+2025-04-25 13:22:25,266 - __main__ - INFO - Epoch 157, Train Loss: 1506.3415, Valid Loss: 1378.2639
+2025-04-25 13:22:25,266 - __main__ - INFO - No improvement (1/10)
+2025-04-25 13:23:21,746 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:23:25,369 - __main__ - INFO - [Val] Loss: 1367.1234, MAE: 15.8743, MAPE: 58.9223, RMSE: 35.4077
+2025-04-25 13:23:25,369 - __main__ - INFO - Epoch 158, Train Loss: 1503.1400, Valid Loss: 1367.1234
+2025-04-25 13:23:25,377 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch158_ValLoss:1367.1234.pth
+2025-04-25 13:24:22,156 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:24:25,857 - __main__ - INFO - [Val] Loss: 1362.7376, MAE: 15.8731, MAPE: 59.0141, RMSE: 35.3271
+2025-04-25 13:24:25,858 - __main__ - INFO - Epoch 159, Train Loss: 1500.4382, Valid Loss: 1362.7376
+2025-04-25 13:24:25,867 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch159_ValLoss:1362.7376.pth
+2025-04-25 13:25:22,305 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:25:25,994 - __main__ - INFO - [Val] Loss: 1363.6474, MAE: 15.9327, MAPE: 59.1051, RMSE: 35.3619
+2025-04-25 13:25:25,995 - __main__ - INFO - Epoch 160, Train Loss: 1497.9647, Valid Loss: 1363.6474
+2025-04-25 13:25:25,995 - __main__ - INFO - No improvement (1/10)
+2025-04-25 13:26:22,572 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:26:26,283 - __main__ - INFO - [Val] Loss: 1364.3146, MAE: 15.9232, MAPE: 59.4265, RMSE: 35.3960
+2025-04-25 13:26:26,284 - __main__ - INFO - Epoch 161, Train Loss: 1496.3880, Valid Loss: 1364.3146
+2025-04-25 13:26:26,284 - __main__ - INFO - No improvement (2/10)
+2025-04-25 13:27:22,647 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:27:26,338 - __main__ - INFO - [Val] Loss: 1362.5922, MAE: 15.8813, MAPE: 59.1251, RMSE: 35.3295
+2025-04-25 13:27:26,338 - __main__ - INFO - Epoch 162, Train Loss: 1495.8646, Valid Loss: 1362.5922
+2025-04-25 13:27:26,345 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch162_ValLoss:1362.5922.pth
+2025-04-25 13:28:23,032 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:28:26,746 - __main__ - INFO - [Val] Loss: 1359.2276, MAE: 15.8559, MAPE: 59.3353, RMSE: 35.2506
+2025-04-25 13:28:26,746 - __main__ - INFO - Epoch 163, Train Loss: 1494.3542, Valid Loss: 1359.2276
+2025-04-25 13:28:26,756 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch163_ValLoss:1359.2276.pth
+2025-04-25 13:29:23,040 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:29:26,723 - __main__ - INFO - [Val] Loss: 1357.3553, MAE: 15.8983, MAPE: 59.5551, RMSE: 35.2819
+2025-04-25 13:29:26,723 - __main__ - INFO - Epoch 164, Train Loss: 1484.8957, Valid Loss: 1357.3553
+2025-04-25 13:29:26,730 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch164_ValLoss:1357.3553.pth
+2025-04-25 13:30:23,276 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:30:26,975 - __main__ - INFO - [Val] Loss: 1343.3813, MAE: 15.7892, MAPE: 59.2330, RMSE: 35.1212
+2025-04-25 13:30:26,976 - __main__ - INFO - Epoch 165, Train Loss: 1484.2769, Valid Loss: 1343.3813
+2025-04-25 13:30:26,984 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch165_ValLoss:1343.3813.pth
+2025-04-25 13:31:23,265 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:31:26,898 - __main__ - INFO - [Val] Loss: 1351.8211, MAE: 15.8878, MAPE: 59.9002, RMSE: 35.2355
+2025-04-25 13:31:26,899 - __main__ - INFO - Epoch 166, Train Loss: 1482.4934, Valid Loss: 1351.8211
+2025-04-25 13:31:26,899 - __main__ - INFO - No improvement (1/10)
+2025-04-25 13:32:23,411 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:32:27,111 - __main__ - INFO - [Val] Loss: 1369.1502, MAE: 15.9342, MAPE: 59.6142, RMSE: 35.4571
+2025-04-25 13:32:27,111 - __main__ - INFO - Epoch 167, Train Loss: 1484.6261, Valid Loss: 1369.1502
+2025-04-25 13:32:27,111 - __main__ - INFO - No improvement (2/10)
+2025-04-25 13:33:23,011 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:33:26,631 - __main__ - INFO - [Val] Loss: 1345.0112, MAE: 15.7754, MAPE: 58.8733, RMSE: 35.1410
+2025-04-25 13:33:26,632 - __main__ - INFO - Epoch 168, Train Loss: 1481.2970, Valid Loss: 1345.0112
+2025-04-25 13:33:26,632 - __main__ - INFO - No improvement (3/10)
+2025-04-25 13:34:23,177 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:34:26,884 - __main__ - INFO - [Val] Loss: 1347.1016, MAE: 15.8191, MAPE: 59.4960, RMSE: 35.1530
+2025-04-25 13:34:26,885 - __main__ - INFO - Epoch 169, Train Loss: 1479.7887, Valid Loss: 1347.1016
+2025-04-25 13:34:26,885 - __main__ - INFO - No improvement (4/10)
+2025-04-25 13:35:23,322 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:35:26,935 - __main__ - INFO - [Val] Loss: 1351.6172, MAE: 15.7984, MAPE: 58.8075, RMSE: 35.1896
+2025-04-25 13:35:26,935 - __main__ - INFO - Epoch 170, Train Loss: 1474.5371, Valid Loss: 1351.6172
+2025-04-25 13:35:26,935 - __main__ - INFO - No improvement (5/10)
+2025-04-25 13:36:23,505 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:36:27,210 - __main__ - INFO - [Val] Loss: 1339.1795, MAE: 15.7746, MAPE: 59.2011, RMSE: 35.0056
+2025-04-25 13:36:27,211 - __main__ - INFO - Epoch 171, Train Loss: 1469.5430, Valid Loss: 1339.1795
+2025-04-25 13:36:27,222 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch171_ValLoss:1339.1795.pth
+2025-04-25 13:37:23,533 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:37:27,132 - __main__ - INFO - [Val] Loss: 1337.9641, MAE: 15.7662, MAPE: 58.8932, RMSE: 35.0295
+2025-04-25 13:37:27,133 - __main__ - INFO - Epoch 172, Train Loss: 1473.2017, Valid Loss: 1337.9641
+2025-04-25 13:37:27,140 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch172_ValLoss:1337.9641.pth
+2025-04-25 13:38:23,511 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:38:27,220 - __main__ - INFO - [Val] Loss: 1342.9585, MAE: 15.7794, MAPE: 59.1879, RMSE: 35.1143
+2025-04-25 13:38:27,221 - __main__ - INFO - Epoch 173, Train Loss: 1466.7557, Valid Loss: 1342.9585
+2025-04-25 13:38:27,221 - __main__ - INFO - No improvement (1/10)
+2025-04-25 13:39:23,513 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:39:27,184 - __main__ - INFO - [Val] Loss: 1343.1498, MAE: 15.8160, MAPE: 59.4194, RMSE: 35.1141
+2025-04-25 13:39:27,184 - __main__ - INFO - Epoch 174, Train Loss: 1467.1185, Valid Loss: 1343.1498
+2025-04-25 13:39:27,184 - __main__ - INFO - No improvement (2/10)
+2025-04-25 13:40:23,660 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:40:27,357 - __main__ - INFO - [Val] Loss: 1328.6464, MAE: 15.7185, MAPE: 59.4939, RMSE: 34.9356
+2025-04-25 13:40:27,357 - __main__ - INFO - Epoch 175, Train Loss: 1458.8483, Valid Loss: 1328.6464
+2025-04-25 13:40:27,365 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch175_ValLoss:1328.6464.pth
+2025-04-25 13:41:23,781 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:41:27,457 - __main__ - INFO - [Val] Loss: 1334.3427, MAE: 15.7421, MAPE: 59.0650, RMSE: 34.9767
+2025-04-25 13:41:27,457 - __main__ - INFO - Epoch 176, Train Loss: 1463.0250, Valid Loss: 1334.3427
+2025-04-25 13:41:27,457 - __main__ - INFO - No improvement (1/10)
+2025-04-25 13:42:23,813 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:42:27,483 - __main__ - INFO - [Val] Loss: 1328.7696, MAE: 15.7203, MAPE: 58.8215, RMSE: 34.8964
+2025-04-25 13:42:27,484 - __main__ - INFO - Epoch 177, Train Loss: 1465.0813, Valid Loss: 1328.7696
+2025-04-25 13:42:27,484 - __main__ - INFO - No improvement (2/10)
+2025-04-25 13:43:23,723 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:43:27,398 - __main__ - INFO - [Val] Loss: 1327.6924, MAE: 15.6569, MAPE: 58.3864, RMSE: 34.8825
+2025-04-25 13:43:27,399 - __main__ - INFO - Epoch 178, Train Loss: 1456.6189, Valid Loss: 1327.6924
+2025-04-25 13:43:27,405 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch178_ValLoss:1327.6924.pth
+2025-04-25 13:44:24,244 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:44:27,948 - __main__ - INFO - [Val] Loss: 1322.9457, MAE: 15.7391, MAPE: 58.9732, RMSE: 34.8620
+2025-04-25 13:44:27,948 - __main__ - INFO - Epoch 179, Train Loss: 1454.7345, Valid Loss: 1322.9457
+2025-04-25 13:44:27,957 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch179_ValLoss:1322.9457.pth
+2025-04-25 13:45:24,479 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:45:28,162 - __main__ - INFO - [Val] Loss: 1322.3550, MAE: 15.7441, MAPE: 58.7722, RMSE: 34.8591
+2025-04-25 13:45:28,163 - __main__ - INFO - Epoch 180, Train Loss: 1452.0391, Valid Loss: 1322.3550
+2025-04-25 13:45:28,170 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch180_ValLoss:1322.3550.pth
+2025-04-25 13:46:24,896 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:46:28,617 - __main__ - INFO - [Val] Loss: 1323.0968, MAE: 15.7645, MAPE: 59.1760, RMSE: 34.8845
+2025-04-25 13:46:28,618 - __main__ - INFO - Epoch 181, Train Loss: 1445.5679, Valid Loss: 1323.0968
+2025-04-25 13:46:28,618 - __main__ - INFO - No improvement (1/10)
+2025-04-25 13:47:25,154 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:47:28,823 - __main__ - INFO - [Val] Loss: 1320.4314, MAE: 15.6887, MAPE: 58.7355, RMSE: 34.8551
+2025-04-25 13:47:28,823 - __main__ - INFO - Epoch 182, Train Loss: 1439.5492, Valid Loss: 1320.4314
+2025-04-25 13:47:28,830 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch182_ValLoss:1320.4314.pth
+2025-04-25 13:48:25,646 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:48:29,388 - __main__ - INFO - [Val] Loss: 1316.0265, MAE: 15.7100, MAPE: 59.6778, RMSE: 34.7860
+2025-04-25 13:48:29,388 - __main__ - INFO - Epoch 183, Train Loss: 1443.2027, Valid Loss: 1316.0265
+2025-04-25 13:48:29,397 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch183_ValLoss:1316.0265.pth
+2025-04-25 13:49:26,070 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:49:29,764 - __main__ - INFO - [Val] Loss: 1312.1914, MAE: 15.6688, MAPE: 59.1756, RMSE: 34.7337
+2025-04-25 13:49:29,764 - __main__ - INFO - Epoch 184, Train Loss: 1441.8914, Valid Loss: 1312.1914
+2025-04-25 13:49:29,770 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch184_ValLoss:1312.1914.pth
+2025-04-25 13:50:26,437 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:50:30,120 - __main__ - INFO - [Val] Loss: 1311.4251, MAE: 15.6575, MAPE: 59.2570, RMSE: 34.6777
+2025-04-25 13:50:30,120 - __main__ - INFO - Epoch 185, Train Loss: 1442.3270, Valid Loss: 1311.4251
+2025-04-25 13:50:30,128 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch185_ValLoss:1311.4251.pth
+2025-04-25 13:51:26,761 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:51:30,445 - __main__ - INFO - [Val] Loss: 1320.3382, MAE: 15.6626, MAPE: 58.7644, RMSE: 34.8003
+2025-04-25 13:51:30,446 - __main__ - INFO - Epoch 186, Train Loss: 1432.8903, Valid Loss: 1320.3382
+2025-04-25 13:51:30,446 - __main__ - INFO - No improvement (1/10)
+2025-04-25 13:52:27,147 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:52:30,846 - __main__ - INFO - [Val] Loss: 1321.8847, MAE: 15.6977, MAPE: 59.2814, RMSE: 34.8255
+2025-04-25 13:52:30,847 - __main__ - INFO - Epoch 187, Train Loss: 1435.5658, Valid Loss: 1321.8847
+2025-04-25 13:52:30,847 - __main__ - INFO - No improvement (2/10)
+2025-04-25 13:53:27,089 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:53:30,785 - __main__ - INFO - [Val] Loss: 1315.6839, MAE: 15.7026, MAPE: 59.3329, RMSE: 34.7569
+2025-04-25 13:53:30,786 - __main__ - INFO - Epoch 188, Train Loss: 1429.7097, Valid Loss: 1315.6839
+2025-04-25 13:53:30,786 - __main__ - INFO - No improvement (3/10)
+2025-04-25 13:54:26,851 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:54:30,528 - __main__ - INFO - [Val] Loss: 1305.5017, MAE: 15.6220, MAPE: 58.7553, RMSE: 34.5744
+2025-04-25 13:54:30,528 - __main__ - INFO - Epoch 189, Train Loss: 1433.2712, Valid Loss: 1305.5017
+2025-04-25 13:54:30,536 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch189_ValLoss:1305.5017.pth
+2025-04-25 13:55:26,822 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:55:30,524 - __main__ - INFO - [Val] Loss: 1298.4227, MAE: 15.5349, MAPE: 58.3674, RMSE: 34.5244
+2025-04-25 13:55:30,524 - __main__ - INFO - Epoch 190, Train Loss: 1428.3899, Valid Loss: 1298.4227
+2025-04-25 13:55:30,531 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch190_ValLoss:1298.4227.pth
+2025-04-25 13:56:27,311 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:56:30,992 - __main__ - INFO - [Val] Loss: 1308.3266, MAE: 15.6002, MAPE: 58.7061, RMSE: 34.6718
+2025-04-25 13:56:30,993 - __main__ - INFO - Epoch 191, Train Loss: 1423.5784, Valid Loss: 1308.3266
+2025-04-25 13:56:30,993 - __main__ - INFO - No improvement (1/10)
+2025-04-25 13:57:27,281 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:57:30,972 - __main__ - INFO - [Val] Loss: 1310.0150, MAE: 15.7224, MAPE: 59.9651, RMSE: 34.7255
+2025-04-25 13:57:30,973 - __main__ - INFO - Epoch 192, Train Loss: 1419.9178, Valid Loss: 1310.0150
+2025-04-25 13:57:30,973 - __main__ - INFO - No improvement (2/10)
+2025-04-25 13:58:27,476 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:58:31,156 - __main__ - INFO - [Val] Loss: 1310.5748, MAE: 15.6844, MAPE: 59.4761, RMSE: 34.7848
+2025-04-25 13:58:31,156 - __main__ - INFO - Epoch 193, Train Loss: 1418.2416, Valid Loss: 1310.5748
+2025-04-25 13:58:31,156 - __main__ - INFO - No improvement (3/10)
+2025-04-25 13:59:27,494 - __main__ - INFO - Start validation phase.....
+2025-04-25 13:59:31,175 - __main__ - INFO - [Val] Loss: 1306.7612, MAE: 15.6318, MAPE: 59.0051, RMSE: 34.6616
+2025-04-25 13:59:31,176 - __main__ - INFO - Epoch 194, Train Loss: 1417.1385, Valid Loss: 1306.7612
+2025-04-25 13:59:31,176 - __main__ - INFO - No improvement (4/10)
+2025-04-25 14:00:27,484 - __main__ - INFO - Start validation phase.....
+2025-04-25 14:00:31,175 - __main__ - INFO - [Val] Loss: 1305.1866, MAE: 15.6916, MAPE: 59.8660, RMSE: 34.6841
+2025-04-25 14:00:31,175 - __main__ - INFO - Epoch 195, Train Loss: 1419.1559, Valid Loss: 1305.1866
+2025-04-25 14:00:31,175 - __main__ - INFO - No improvement (5/10)
+2025-04-25 14:01:27,479 - __main__ - INFO - Start validation phase.....
+2025-04-25 14:01:31,174 - __main__ - INFO - [Val] Loss: 1302.2189, MAE: 15.6283, MAPE: 59.2344, RMSE: 34.5864
+2025-04-25 14:01:31,174 - __main__ - INFO - Epoch 196, Train Loss: 1418.1177, Valid Loss: 1302.2189
+2025-04-25 14:01:31,174 - __main__ - INFO - No improvement (6/10)
+2025-04-25 14:02:27,606 - __main__ - INFO - Start validation phase.....
+2025-04-25 14:02:31,291 - __main__ - INFO - [Val] Loss: 1301.1307, MAE: 15.5712, MAPE: 58.6954, RMSE: 34.5576
+2025-04-25 14:02:31,291 - __main__ - INFO - Epoch 197, Train Loss: 1416.1121, Valid Loss: 1301.1307
+2025-04-25 14:02:31,291 - __main__ - INFO - No improvement (7/10)
+2025-04-25 14:03:27,434 - __main__ - INFO - Start validation phase.....
+2025-04-25 14:03:31,120 - __main__ - INFO - [Val] Loss: 1289.6507, MAE: 15.5756, MAPE: 59.1648, RMSE: 34.4117
+2025-04-25 14:03:31,121 - __main__ - INFO - Epoch 198, Train Loss: 1410.9120, Valid Loss: 1289.6507
+2025-04-25 14:03:31,129 - __main__ - INFO - Better model saved: data/ckpt/NYC/agcrn/30min/ckpt/expagcrn_epoch198_ValLoss:1289.6507.pth
+2025-04-25 14:04:27,610 - __main__ - INFO - Start validation phase.....
+2025-04-25 14:04:31,316 - __main__ - INFO - [Val] Loss: 1308.1657, MAE: 15.6112, MAPE: 58.8938, RMSE: 34.6464
+2025-04-25 14:04:31,316 - __main__ - INFO - Epoch 199, Train Loss: 1411.0737, Valid Loss: 1308.1657
+2025-04-25 14:04:31,317 - __main__ - INFO - No improvement (1/10)
+2025-04-25 14:05:27,687 - __main__ - INFO - Start validation phase.....
+2025-04-25 14:05:31,386 - __main__ - INFO - [Val] Loss: 1298.2704, MAE: 15.6083, MAPE: 59.2120, RMSE: 34.5453
+2025-04-25 14:05:31,387 - __main__ - INFO - Epoch 200, Train Loss: 1409.6683, Valid Loss: 1298.2704
+2025-04-25 14:05:31,387 - __main__ - INFO - No improvement (2/10)
+2025-04-25 14:05:31,387 - __main__ - INFO - Loaded best model for final evaluation.
+2025-04-25 14:05:31,387 - __main__ - INFO - Training completed. Evaluating on test set...
+2025-04-25 14:05:31,387 - __main__ - INFO - Start validation phase.....
+2025-04-25 14:05:35,092 - __main__ - INFO - [Val] Loss: 1289.6507, MAE: 15.5756, MAPE: 59.1648, RMSE: 34.4117
+2025-04-25 14:05:35,093 - __main__ - INFO - Start testing phase.....
+2025-04-25 14:05:38,755 - __main__ - INFO - [Test] Loss: 453.1883, MAE: 10.6209, MAPE: 67.0415, RMSE: 20.3866
+2025-04-25 14:05:38,760 - __main__ - INFO - valid	MAE	RMSE	MAPE
+2025-04-25 14:05:38,760 - __main__ - INFO - mean:	15.5756	34.4117	59.1648
+2025-04-25 14:05:38,760 - __main__ - INFO - std:	0.0000	0.0000	0.0000
+2025-04-25 14:05:38,760 - __main__ - INFO - 
+
+
+2025-04-25 14:05:38,761 - __main__ - INFO - Test	MAE	RMSE	MAPE
+2025-04-25 14:05:38,761 - __main__ - INFO - mean:	10.6209	20.3866	67.0415
+2025-04-25 14:05:38,761 - __main__ - INFO - std:	0.0000	0.0000	0.0000
+2025-04-25 14:05:38,761 - __main__ - INFO - 
+
+
