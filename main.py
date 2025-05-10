@@ -40,9 +40,9 @@ if __name__ == "__main__":
     data_name = "NYC"
     
     # Chiedi all'utente quale modello vuole utilizzare
-    name_model = input("Select the model u want to use (S,G,A): ").upper()
-    while name_model not in ["A", "G", "S"]:
-        name_model = input("Errore: Select the model u want to use (S,G,A): ").upper()
+    name_model = input("Select the model u want to use (S,D,A): ").upper()
+    while name_model not in ["A", "D", "S"]:
+        name_model = input("Errore: Select the model u want to use (S,D,A): ").upper()
     
     # Scegli il file di configurazione appropriato in base al modello
     if name_model == "S":
