@@ -130,9 +130,7 @@ def explore_dataset(dataset_path):
 # Funzione principale
 if __name__ == "__main__":
     # Sostituisci con il percorso al tuo file NPZ
-    dataset_path = "data/train_data/BJ/all_data_r1_d1_w1_30min.npz"
+    dataset_path = "data/train_data/NYC/all_data_r1_d1_w1_30min.npz"
     
     # Esplora il dataset
     data = explore_dataset(dataset_path)
-    
-    print("\nAnalisi completata. Ora puoi usare 'data' per ulteriori esplorazioni interattive.")
