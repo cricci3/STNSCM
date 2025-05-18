@@ -124,7 +124,7 @@ def model_test(runid, engine, dataloader, device, logger, cfg, mode='Test'):
     if mode=='Test':
         # 测试结果保留，用于生成图像
         pred_all = predicts
-        path_save_pred = os.path.join(cfg['save'], cfg['model_name'], cfg['data']['freq'], 'result_pred')
+        path_save_pred = os.path.join(cfg['save'], cfg['model_name']+ "_no_geo_matrix", cfg['data']['freq'], 'result_pred')
         if not os.path.exists(path_save_pred):
             os.makedirs(path_save_pred, exist_ok=True)
 

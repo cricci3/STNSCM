@@ -100,13 +100,7 @@ if __name__ == "__main__":
         cfg["data"]["test_batch_size"],
         logger=logger,
     )
-    
-    # Building diagram information
-    geo_graph = np.load(os.path.join(base_path, "geo_affinity.npy")).astype(np.float32)
-    od_graph = np.load(os.path.join(base_path, "OD_affinity.npy")).astype(np.float32)
-    adjs = [geo_graph, od_graph]
-    static_norm_adjs = [torch.tensor(asym_adj(adj)).to(device) for adj in adjs]
-    
+
     # Setting up the model
     model_name = cfg["model_name"]
     input_dim = cfg["model"]["input_dim"]
@@ -115,6 +109,23 @@ if __name__ == "__main__":
     num_nodes = cfg["data"]["cluster_num"]
     num_for_target = cfg["data"]["num_for_target"]
     num_for_predict = cfg["data"]["num_for_predict"]
+    
+    # Building diagram information
+    if cfg["ablation"]["use_geo_affinity_matrix"]:
+        geo_graph = np.load(os.path.join(base_path, "geo_affinity.npy")).astype(np.float32)
+    else:
+        geo_graph = np.eye(num_nodes, dtype=np.float32)
+    
+    if cfg["ablation"]["use_origin_destination_matrix"]:
+        od_graph = np.load(os.path.join(base_path, "OD_affinity.npy")).astype(np.float32)
+    else:
+        od_graph = np.eye(num_nodes, dtype=np.float32)
+
+    adjs = [geo_graph, od_graph]
+    static_norm_adjs = [torch.tensor(asym_adj(adj)).to(device) for adj in adjs]
+
+    print("geo_affinity", geo_graph)
+    print("od_graph", od_graph)
     
     # Initialize the model based on user selection
     if name_model == "S":
