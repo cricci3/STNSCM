@@ -5,7 +5,7 @@ base_path: data/train_data/NYC
 dataset_name: all_data_r1_d1_w1_30min.npz
 # General Settings
 model_name: STNSCN
-device: cuda:0
+device: mps
 save: data/ckpt/NYC
 
 data:

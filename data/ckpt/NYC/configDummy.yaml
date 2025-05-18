@@ -5,7 +5,7 @@ base_path: data/train_data/NYC
 dataset_name: all_data_r1_d1_w1_30min.npz
 
 model_name: dummy_gru
-device: cuda:0
+device: mps
 save: data/ckpt/NYC
 
 data:
@@ -51,3 +51,11 @@ train:
     tolerance: 10
     use_curriculum_learning: false
     weight_decay: 0.0001
+
+ablation:
+    use_geo_affinity_matrix: True
+    use_origin_destination_matrix: True
+    use_dynamic_graph: true
+    use_counterfactual: false # → off contrafactual predictions.
+    use_input_gate: false # → off  gating
+    use_graph_gate_rnn: true

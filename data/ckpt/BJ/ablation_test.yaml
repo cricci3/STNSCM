@@ -2,7 +2,7 @@ expid: 1
 runs: 2
 
 dataset_name: all_data_r1_d1_w1_30min.npz
-device: cuda:0
+device: mps
 log_level: INFO
 base_path: data/train_data/BJ
 save: data/ckpt/BJ
