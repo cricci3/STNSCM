@@ -38,6 +38,11 @@ model:
     num_of_head: 1
     output_dim: 2
     time_dim: 67
+    num_for_predict: 6
+    num_for_target: 2
+    num_of_weeks: 1
+    num_of_days: 1
+    num_of_hours: 1
 
     use_transform: true
 
@@ -90,9 +95,24 @@ train:
     use_curriculum_learning: true
     weight_decay: 0.0001
 
+# config 1
+# ablation:
+# use_dynamic_graph: true # on/off DynamicGraph.
+# use_counterfactual: true # enable/disable contrafactual predictions.
+# use_input_gate: true # enable/disable gates in the input
+# use_graph_gate_rnn: true # enable/disable GraphGateRNN (use only GCN if false)
+# #config 2
+# ablation:
+#   use_dynamic_graph: false     # → disable DynamicGraph
+#   use_counterfactual: true
+#   use_input_gate: true
+#   use_graph_gate_rnn: false    # →only static GNC
+
+# config 3
 ablation:
     use_geo_affinity_matrix: True
     use_origin_destination_matrix: False
-#     use_dynamic_graph: false
-#     use_counterfactual: true
-#     use_input_gate: true
+    use_dynamic_graph: true
+    use_counterfactual: false # → off contrafactual predictions.
+    use_input_gate: false # → off  gating
+    use_graph_gate_rnn: true

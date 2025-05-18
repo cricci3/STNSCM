@@ -1,139 +1,116 @@
-# !/usr/bin/env python
-# -*- coding:utf-8 -*-
-"""
-==================================================================
-               **Life is short, You need Python!**
-File         : model.py
-Project      : AAAI2023-STNSCN
-Created Date : 2021/11/14 23:21
-Author       : Yu Zhao 
-Email        : yzhao@buaa.edu.cn
-==================================================================
-Description  : Main model implementation for Spatial-Temporal Neural 
-               Network with Structural Context Network (STNSCN)
-==================================================================
-TODO List:
-   Date                       Comments                        Finish
-   
-   
-   
----------   --------------------------------------------   -------   
-"""
-
-
+# Updated STNSCN model with ablation flags from config
 import torch
 import torch.nn as nn
-
 from model.Decoder import Decoder
 from model.Encoder import Encoder
 from model.Transform import Transform
 
-
 class STNSCN(nn.Module):
-    def __init__(self, input_dim, time_dim, hidden_dim, output_dim, gcn_depth, fusion_mode,
-                 num_of_weeks, num_of_days, num_of_hours, num_for_predict, num_for_target, num_of_head,
-                 dropout_prob, dropout_type, device, alpha=1, use_transform=True,
-                 static_norm_adjs=None,
-                 norm='D-1',
-                 use_curriculum_learning=True, cl_decay_steps=4000):
-
+    def __init__(self, config, static_norm_adjs=None):
         super(STNSCN, self).__init__()
 
-        self.in_channels = input_dim
-        self.time_channels = time_dim
-        self.hidden_channels = hidden_dim
-        self.output_channels = output_dim
+        model_cfg = config["model"]
+        ab_cfg = config.get("ablation", {})
 
-        self.dropout = nn.Dropout(p=dropout_prob)
+        self.in_channels = model_cfg["input_dim"]
+        self.time_channels = model_cfg["time_dim"]
+        self.hidden_channels = model_cfg["hidden_dim"]
+        self.output_channels = model_cfg["output_dim"]
 
-        self.seq_length = num_for_predict
+        self.seq_length = model_cfg["num_for_predict"]
+        self.device = config["device"]
+        self.use_transform = model_cfg.get("use_transform", True)
 
-        self.use_transform = use_transform
-        self.device = device
+        # Ablation flags
+        self.use_dynamic_graph = ab_cfg.get("use_dynamic_graph", True)
+        self.use_graph_gate_rnn = ab_cfg.get("use_graph_gate_rnn", True)
+        self.use_counterfactual = ab_cfg.get("use_counterfactual", True)
+        self.use_input_gate = ab_cfg.get("use_input_gate", True)
 
         node_num = static_norm_adjs[0].shape[0]
-        # node_num = 54
         self.node_num = node_num
-        self.encoder = Encoder(input_dim,
-                               time_dim,
-                               hidden_dim,
-                               gcn_depth,
-                               alpha,
-                               num_of_weeks,
-                               num_of_days,
-                               num_of_hours,
-                               num_for_predict,
-                               dropout_prob,
-                               dropout_type,
-                               fusion_mode,
-                               node_num,
-                               static_norm_adjs,
-                               norm,
-                               device,
-                               )
 
-        self.decoder = Decoder(input_dim,
-                               time_dim,
-                               hidden_dim,
-                               output_dim,
-                               gcn_depth,
-                               alpha,
-                               num_of_weeks,
-                               num_of_days,
-                               num_of_hours,
-                               num_for_predict,
-                               dropout_prob,
-                               dropout_type,
-                               'mix',
-                               node_num,
-                               static_norm_adjs,
-                               norm,
-                               use_curriculum_learning,
-                               cl_decay_steps)
+        self.encoder = Encoder(
+            self.in_channels,
+            self.time_channels,
+            self.hidden_channels,
+            model_cfg["gcn_depth"],
+            model_cfg["alpha"],
+            model_cfg["num_of_weeks"],
+            model_cfg["num_of_days"],
+            model_cfg["num_of_hours"],
+            model_cfg["num_for_predict"],
+            model_cfg["dropout_prob"],
+            model_cfg["dropout_type"],
+            model_cfg["fusion_mode"],
+            node_num,
+            static_norm_adjs,
+            model_cfg["dyn_norm"],
+            self.device,
+            use_dynamic_graph=self.use_dynamic_graph,
+            use_graph_gate_rnn=self.use_graph_gate_rnn
+        )
 
+        self.decoder = Decoder(
+            self.in_channels,
+            self.time_channels,
+            self.hidden_channels,
+            self.output_channels,
+            model_cfg["gcn_depth"],
+            model_cfg["alpha"],
+            model_cfg["num_of_weeks"],
+            model_cfg["num_of_days"],
+            model_cfg["num_of_hours"],
+            model_cfg["num_for_predict"],
+            model_cfg["dropout_prob"],
+            model_cfg["dropout_type"],
+            "mix",
+            node_num,
+            static_norm_adjs,
+            model_cfg["dyn_norm"],
+            config["train"].get("use_curriculum_learning", True),
+            config["train"].get("cl_decay_steps", 4000)
+        )
 
-        if use_transform == True:
-            self.transform = Transform(time_dim,
-                                       hidden_dim,
-                                       num_of_weeks,
-                                       num_of_days,
-                                       num_of_hours,
-                                       num_for_predict,
-                                       num_for_target,
-                                       num_of_head,
-                                       dropout_prob)
+        if self.use_transform:
+            self.transform = Transform(
+                self.time_channels,
+                self.hidden_channels,
+                model_cfg["num_of_weeks"],
+                model_cfg["num_of_days"],
+                model_cfg["num_of_hours"],
+                model_cfg["num_for_predict"],
+                model_cfg["num_for_target"],
+                model_cfg["num_of_head"],
+                model_cfg["dropout_prob"]
+            )
 
     def forward(self, x, x_time, target_time, target_cl=None, task_level=2, global_step=None):
-
         batch_size, node_num, num_for_predict, dim = x.shape
+
         if len(x_time.shape) < 4 and len(target_time.shape) < 4:
             x_time = x_time.unsqueeze(dim=1).repeat(1, node_num, 1, 1)
             target_time = target_time.unsqueeze(dim=1).repeat(1, node_num, 1, 1)
 
-        # Encoder output is discarded, [batch, RNN_layer, node_num, num_pred, hidden_channels]
         outputs, encoder_hiddens = self.encoder(x, x_time, self.seq_length)
 
-        # [batch, RNN_layer, node_num, num_pred, hidden_channels]
-        if self.use_transform == True :
-            # [batch, RNN_layer, node_num, num_pred, hidden_channels]
+        if self.use_transform:
             encoder_hiddens_last = encoder_hiddens[:, :, :, -1, :]
             encoder_hiddens = self.transform(encoder_hiddens, x_time, target_time)
             encoder_hiddens = encoder_hiddens + encoder_hiddens_last
-
-        elif self.use_transform == False:
+        else:
             encoder_hiddens = encoder_hiddens[:, :, :, -1, :]
 
-        # Decoder input should be the output of the previous decoder
-        # During training, real labels are used as decoder input
-        # Initial input uses the time point closest to prediction
-        # batch_size, node_num, num_for_predict, dim
         GO_decoder_input = torch.zeros((batch_size, node_num, 1, self.in_channels), device=self.device)
 
-        # Curriculum learning: gradually increase input sequence length
-        # and use label as decoder input with certain probability
-        # Otherwise, use the previous time step's decoder output as the input for the next time step
-        outputs_final= self.decoder(GO_decoder_input, target_time, target_cl, encoder_hiddens,
-                                    task_level, global_step)
+        outputs_final = self.decoder(
+            GO_decoder_input,
+            target_time,
+            target_cl,
+            encoder_hiddens,
+            task_level,
+            global_step
+        )
 
         del outputs, encoder_hiddens, GO_decoder_input
 

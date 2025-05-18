@@ -1,0 +1,36 @@
+2025-04-28 12:32:34,839 - __main__ - INFO - Log directory: data/ckpt/NYC/agcrn/30min/log
+2025-04-28 12:32:34,841 - __main__ - INFO - {'expid': 1, 'runs': 1, 'log_level': 'INFO', 'base_path': 'data/train_data/NYC', 'dataset_name': 'all_data_r1_d1_w1_30min.npz', 'model_name': 'agcrn', 'device': 'mps', 'save': 'data/ckpt/NYC', 'data': {'freq': '30min', 'name': 'nyc_bike', 'cluster_num': 54, 'num_for_predict': 54, 'num_for_target': 2, 'num_of_days': 1, 'num_of_hours': 1, 'num_of_weeks': 1, 'num_shift': 2, 'points_per_hour': 2, 'test_batch_size': 64, 'train_batch_size': 64, 'val_batch_size': 64}, 'model': {'input_dim': 2, 'hidden_dim': 64, 'output_dim': 2, 'loss_type': 'mse', 'time_dim': 0}, 'train': {'base_lr': 0.0001, 'best_mode': '', 'test_only': False, 'cl_decay_steps': 0, 'epoch_start': 0, 'epochs': 30, 'global_step': 0, 'load_initial': False, 'lr_decay_ratio': 0.5, 'max_grad_norm': 5, 'milestones': [10, 20], 'min_learning_rate': 1e-05, 'new_training': True, 'print_every': 1, 'tolerance': 10, 'use_curriculum_learning': False, 'weight_decay': 0.0001}}
+2025-04-28 12:32:34,841 - __main__ - INFO - data/train_data/NYC/all_data_r1_d1_w1_30min.npz
+2025-04-28 12:32:34,841 - __main__ - INFO - data/ckpt/NYC/agcrn/30min/log
+2025-04-28 12:32:35,775 - __main__ - INFO - ('train x', (13743, 54, 18, 2))
+2025-04-28 12:32:35,776 - __main__ - INFO - ('train target', (13743, 54, 2, 2))
+2025-04-28 12:32:35,776 - __main__ - INFO - ('train x time', (13743, 18, 14))
+2025-04-28 12:32:35,776 - __main__ - INFO - ('train target time', (13743, 2, 14))
+2025-04-28 12:32:35,776 - __main__ - INFO - ('train pos', (13743, 4))
+2025-04-28 12:32:35,776 - __main__ - INFO - 
+
+2025-04-28 12:32:35,776 - __main__ - INFO - ('val x', (1718, 54, 18, 2))
+2025-04-28 12:32:35,776 - __main__ - INFO - ('val target', (1718, 54, 2, 2))
+2025-04-28 12:32:35,776 - __main__ - INFO - ('val x time', (1718, 18, 14))
+2025-04-28 12:32:35,776 - __main__ - INFO - ('val target time', (1718, 2, 14))
+2025-04-28 12:32:35,776 - __main__ - INFO - ('val pos', (1718, 4))
+2025-04-28 12:32:35,776 - __main__ - INFO - 
+
+2025-04-28 12:32:35,776 - __main__ - INFO - ('test x', (1718, 54, 18, 2))
+2025-04-28 12:32:35,776 - __main__ - INFO - ('test target', (1718, 54, 2, 2))
+2025-04-28 12:32:35,776 - __main__ - INFO - ('test x time', (1718, 18, 14))
+2025-04-28 12:32:35,776 - __main__ - INFO - ('test target time', (1718, 2, 14))
+2025-04-28 12:32:35,776 - __main__ - INFO - ('test pos', (1718, 4))
+2025-04-28 12:32:35,776 - __main__ - INFO - 
+
+2025-04-28 12:32:35,776 - __main__ - INFO - scaler.mean : 23.023004191583954, scaler.std : 42.49082466881887
+2025-04-28 12:32:35,776 - __main__ - INFO - 
+
+2025-04-28 12:32:35,776 - __main__ - INFO - time feature index : {'time': (0, 3), 'weather_numerical': (3, 7), 'temperature': (7, 9), 'weather_type': (9, 14)}
+2025-04-28 12:32:35,776 - __main__ - INFO - time weather data : [[Timestamp('2019-01-01 00:00:00') 1 0 ... 0.0 0.0 0.0]
+ [Timestamp('2019-01-01 00:30:00') 1 1 ... 0.0 0.0 0.0]
+ [Timestamp('2019-01-01 01:00:00') 1 2 ... 0.0 0.0 0.0]
+ ...
+ [Timestamp('2019-12-31 22:30:00') 1 45 ... 0.0 0.0 0.0]
+ [Timestamp('2019-12-31 23:00:00') 1 46 ... 0.0 0.0 0.0]
+ [Timestamp('2019-12-31 23:30:00') 1 47 ... 0.0 0.0 0.0]]
