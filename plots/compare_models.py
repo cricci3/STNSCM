@@ -12,7 +12,7 @@ metrics = ['MAE', 'RMSE', 'MAPE']
 # 3 models
 dummy = [3.7620, 7.7303, 29.8141]  # Modello dummy non ha dati
 agcrn = [10.6209, 20.3866, 67.0415]
-stnscn = [2.5289, 4.6835, 19.8475]
+stnscm = [2.5289, 4.6835, 19.8475]
 
 
 # Bar graph
@@ -24,7 +24,7 @@ width = 0.25  # Ridotto per fare spazio al terzo modello
 # Creare le tre barre, una per ogni modello
 plt.bar(x - width, dummy, width, label='Dummy', color='#FF9999')
 plt.bar(x, agcrn, width, label='AGCRN', color='#66B2FF')
-plt.bar(x + width, stnscn, width, label='STNSCN', color='#99FF99')
+plt.bar(x + width, stnscm, width, label='STNSCM', color='#99FF99')
 
 plt.xlabel('Metrics', fontsize=12)
 plt.ylabel('Values', fontsize=12)
@@ -36,7 +36,7 @@ plt.legend(fontsize=10)
 for i in range(len(metrics)):
     plt.text(i - width, dummy[i] + 0.5, f'{dummy[i]:.2f}', ha='center', fontsize=9)
     plt.text(i, agcrn[i] + 0.5, f'{agcrn[i]:.2f}', ha='center', fontsize=9)
-    plt.text(i + width, stnscn[i] + 0.5, f'{stnscn[i]:.2f}', ha='center', fontsize=9)
+    plt.text(i + width, stnscm[i] + 0.5, f'{stnscm[i]:.2f}', ha='center', fontsize=9)
 
 plt.tight_layout()
 plt.grid(axis='y', linestyle='--', alpha=0.7)
@@ -48,7 +48,7 @@ data = []
 for i, metric in enumerate(metrics):
     data.append({'Metric': metric, 'Value': dummy[i], 'Model': 'Dummy'})
     data.append({'Metric': metric, 'Value': agcrn[i], 'Model': 'AGCRN'})
-    data.append({'Metric': metric, 'Value': stnscn[i], 'Model': 'STNSCN'})
+    data.append({'Metric': metric, 'Value': stnscm[i], 'Model': 'STNSCM'})
 
 df = pd.DataFrame(data)
 
@@ -62,7 +62,7 @@ ax = sns.barplot(
     y='Value',
     hue='Model',
     data=df,
-    palette={"Dummy": "#FF9999", "AGCRN": "#66B2FF", "STNSCN": "#99FF99"},
+    palette={"Dummy": "#FF9999", "AGCRN": "#66B2FF", "STNSCM": "#99FF99"},
     errwidth=0,
     alpha=0.8
 )
@@ -88,11 +88,16 @@ plt.show()
 fig, axes = plt.subplots(1, 3, figsize=(16, 6), sharey=False)
 metrics_df = df.pivot(index='Model', columns='Metric', values='Value').reset_index()
 
+# Reorder the models in the desired order: STNSCM, Dummy, AGCRN
+model_order = ['STNSCM', 'Dummy', 'AGCRN']
+metrics_df['Model'] = pd.Categorical(metrics_df['Model'], categories=model_order, ordered=True)
+metrics_df = metrics_df.sort_values('Model')
+
 # Colori personalizzati e coerenti
-palette = {"Dummy": "#FF9999", "AGCRN": "#66B2FF", "STNSCN": "#99FF99"}
+palette = {"Dummy": "#FF9999", "AGCRN": "#66B2FF", "STNSCM": "#99FF99"}
 
 # Grafico per MAE
-sns.barplot(x='Model', y='MAE', data=metrics_df, ax=axes[0], palette=palette, errwidth=0)
+sns.barplot(x='Model', y='MAE', data=metrics_df, ax=axes[0], palette=palette, errwidth=0, order=model_order)
 axes[0].set_title('MAE', fontsize=14)
 
 # Fix: Aggiungi etichette a tutte le barre nel primo grafico
@@ -102,7 +107,7 @@ for p in axes[0].patches:
                 f'{height:.2f}', ha='center', fontsize=10)
 
 # Grafico per RMSE
-sns.barplot(x='Model', y='RMSE', data=metrics_df, ax=axes[1], palette=palette, errwidth=0)
+sns.barplot(x='Model', y='RMSE', data=metrics_df, ax=axes[1], palette=palette, errwidth=0, order=model_order)
 axes[1].set_title('RMSE', fontsize=14)
 
 # Fix: Aggiungi etichette a tutte le barre nel secondo grafico
@@ -112,7 +117,7 @@ for p in axes[1].patches:
                 f'{height:.2f}', ha='center', fontsize=10)
 
 # Grafico per MAPE
-sns.barplot(x='Model', y='MAPE', data=metrics_df, ax=axes[2], palette=palette, errwidth=0)
+sns.barplot(x='Model', y='MAPE', data=metrics_df, ax=axes[2], palette=palette, errwidth=0, order=model_order)
 axes[2].set_title('MAPE', fontsize=14)
 
 # Fix: Aggiungi etichette a tutte le barre nel terzo grafico
